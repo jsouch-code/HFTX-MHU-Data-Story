@@ -117,80 +117,147 @@ m <- leaflet(
   elementId = "test_map",
   height = "85vh",
   width  = "68vw",
-  options = leafletOptions(zoomDelta = 0.5, zoomSnap = 0, dragging = FALSE, minZoom = 6.2999, scrollWheelZoom = FALSE)
+  options = leafletOptions(
+    zoomDelta = 0.5,
+    zoomSnap = 0,
+    dragging = FALSE,
+    minZoom = 6.2999,
+    scrollWheelZoom = FALSE
+  )
 ) |>
-  addProviderTiles("CartoDB.Positron", options = providerTileOptions(opacity = 0)) |>
-  setView(lng = center_lng-3, lat = center_lat, zoom = 6.4999) |>   
-  setMaxBounds(lng1 = -106.6, lat1 = 25.8, lng2 = -93.5, lat2 = 36.5) |>
+  addProviderTiles(
+    "CartoDB.Positron",
+    options = providerTileOptions(opacity = 0)
+  ) |>
+  setView(
+    lng = center_lng - 3,
+    lat = center_lat,
+    zoom = 6.4999
+  ) |>
+  setMaxBounds(
+    lng1 = -106.6,
+    lat1 = 25.8,
+    lng2 = -93.5,
+    lat2 = 36.5
+  ) |>
   mapOptions(zoomToLimits = "always") |>
 
-
-  # --- BASE LAYERS (radio) ---
   addPolygons(
     data = texas_map,
-    group = "Population",                 # baseGroups label
+    group = "Population",
     fillColor = ~pal_pop(population),
-    weight = 2, color = "white",
-    fillOpacity = 1, stroke = TRUE,
-    highlightOptions = highlightOptions(weight = 5, opacity = 1, color = "#D24699", bringToFront = TRUE),
-    label = ~paste("There are", round(population, 0), "women aged 15–49 in this county."),
-    popup = paste(texas_map$CNTY_NM, "County"),
-    labelOptions = labelOptions(textsize = "15px", style = list("font-weight"="bold","padding"="6px"))
+    weight = 2,
+    color = "white",
+    fillOpacity = 1,
+    stroke = TRUE,
+    highlightOptions = highlightOptions(
+      weight = 5,
+      opacity = 1,
+      color = "#D24699",
+      bringToFront = TRUE
+    ),
+    label = ~paste(
+      "There were",
+      format(round(population, 0), big.mark = ","),
+      "women aged 15–49 in",
+      CNTY_NM,
+      "County in 2023."
+    ),
+    popup = ~paste(CNTY_NM, "County"),
+    labelOptions = labelOptions(
+      direction = "auto",
+      textsize = "14px",
+      style = list(
+        "font-weight" = "normal",
+        "padding" = "8px 10px",
+        "font-size" = "14px",
+        "line-height" = "1.3",
+        "width" = "280px",
+        "white-space" = "normal",
+        "word-wrap" = "break-word"
+      )
+    )
   ) |>
   addPolygons(
     data = texas_map,
-    group = "Total Providers per 1,000 Women 15-49",   # baseGroups label
+    group = "Total Providers per 1,000 Women 15-49",
     fillColor = ~pal_perk(PWCT_TX_2023_total_PerK),
-    weight = 2, color = "white",
-    fillOpacity = 1, stroke = TRUE,
-    highlightOptions = highlightOptions(weight = 5, opacity = 1, color = "#D24699", bringToFront = TRUE),
-    label = ~paste("There were", round(PWCT_TX_2023_total_PerK, 2), "providers per 1,000 women (15–49) in", texas_map$CNTY_NM,"County in 2023."),
-    popup = paste(texas_map$CNTY_NM, "County"),
-    labelOptions = labelOptions(textsize = "15px", style = list("font-weight"="bold","padding"="6px"))
+    weight = 2,
+    color = "white",
+    fillOpacity = 1,
+    stroke = TRUE,
+    highlightOptions = highlightOptions(
+      weight = 5,
+      opacity = 1,
+      color = "#D24699",
+      bringToFront = TRUE
+    ),
+    label = ~paste(
+      "There were",
+      round(PWCT_TX_2023_total_PerK, 2),
+      "providers per 1,000 women aged 15–49 in",
+      CNTY_NM,
+      "County in 2023 with 10 new birth control prescriptions per 1,000 women of reproductive age in 2023."
+    ),
+    popup = ~paste(CNTY_NM, "County"),
+    labelOptions = labelOptions(
+      direction = "auto",
+      textsize = "14px",
+      style = list(
+        "font-weight" = "normal",
+        "padding" = "8px 10px",
+        "font-size" = "14px",
+        "line-height" = "1.3",
+        "width" = "280px",
+        "white-space" = "normal",
+        "word-wrap" = "break-word"
+      )
+    )
   ) |>
 
-  # --- OVERLAYS (checkbox) ---
   addMarkers(
-    data = providers[providers$Grantee == "FPP",],
-    lat = ~Latitude, lng = ~Longitude,
+    data = providers[providers$Grantee == "FPP", ],
+    lat = ~Latitude,
+    lng = ~Longitude,
     popup = ~paste0(Provider.Name, " is an FPP provider."),
     clusterOptions = markerClusterOptions(),
     group = "FPP Providers"
   ) |>
   addMarkers(
-    data = providers[providers$Grantee == "HTW",],
-    lat = ~Latitude, lng = ~Longitude,
+    data = providers[providers$Grantee == "HTW", ],
+    lat = ~Latitude,
+    lng = ~Longitude,
     popup = ~paste0(Provider.Name, " is an HTW provider."),
     clusterOptions = markerClusterOptions(),
     group = "HTW Providers"
   ) |>
 
   addLayersControl(
-    baseGroups    = c("Population", "Total Providers per 1,000 Women 15-49"),
+    baseGroups = c("Population", "Total Providers per 1,000 Women 15-49"),
     overlayGroups = c("FPP Providers", "HTW Providers"),
     position = "bottomright",
     options = layersControlOptions(collapsed = TRUE)
   ) |>
 
-  # Legends tied to the SAME group names (so they toggle correctly)
- addLegend(
-  pal = pal_pop, values = texas_map$population,
-  title = "Population of women (15–49)", opacity = 1,
-  group = "Population",
-  className = "legend-pop"
-) |>
-addLegend(
-  pal = pal_perk, values = texas_map$PWCT_TX_2023_total_PerK,
-  title = "Total providers per 1,000 women (15–49)", opacity = 1,
-  group = "Total Providers per 1,000 Women 15-49",
-  className = "legend-perk"
-)|>
+  addLegend(
+    pal = pal_pop,
+    values = texas_map$population,
+    title = "Population of women (15–49)",
+    opacity = 1,
+    group = "Population",
+    className = "legend-pop"
+  ) |>
+  addLegend(
+    pal = pal_perk,
+    values = texas_map$PWCT_TX_2023_total_PerK,
+    title = "Total providers per 1,000 women (15–49)",
+    opacity = 1,
+    group = "Total Providers per 1,000 Women 15-49",
+    className = "legend-perk"
+  ) |>
   setMapWidgetStyle(list(background = "white")) |>
   addResetMapButton() |>
-
-  # Start state: show Population base, hide the other base layer (important)
   hideGroup("Total Providers per 1,000 Women 15-49") |>
-  # Optional: start with overlays off
   hideGroup("FPP Providers") |>
   hideGroup("HTW Providers")
 
@@ -516,7 +583,7 @@ js_code <- paste0(
 ",
 "  var pointsPerPart = 200;
 ",
-"  var partMs = 1400;
+"  var partMs = 100;
 ",
 "  var pausePartMs = 120;
 ",
@@ -878,6 +945,57 @@ m
 
 ::::
 
+::: {.cr-section .quote-section layout="overlay-left"}
+Learn more. @cr-mytext8
+
+| {#cr-mytext8 .cr-text .scale-to-fill}
+| In 2025, South Texas Family Planning & Health Corporation 
+| served [2,576 patients]{#cr-t8} across [18 counties]{#cr-t9} of Texas using its mobile unit.
+
+[@cr-mytext8]{highlight="cr-t8,cr-t9"} Keep scrolling.
+:::
+
+:::: {.cr-section .quote-section layout="overlay-left"}
+Learn more. @cr-pie
+
+::: {#cr-pie}
+```{r pie}
+
+library(echarts4r)
+library(dplyr)
+
+df <- data.frame(
+  sex = c("Females", "Males"),
+  value = c(2045, 531)
+) |>
+  mutate(
+    pct = round(value / sum(value) * 100)
+  )
+
+df |>
+  e_charts(sex, height = "800px", width = "800px") |>
+  e_pie(
+    value,
+    radius = c("0%", "55%"),
+    center = c("50%", "58%"),
+    label = list(
+      formatter = "{b}\n{@value} ({d}%)",
+      fontSize = 18
+    )
+  ) |>
+  e_color(c("#C65B7C", "#4C78A8")) |>
+  e_title(
+    "Patients Served in 2025",
+    "Total: 2,576 clients"
+  ) |>
+  e_tooltip(trigger = "item") |>
+  e_legend(bottom = 20) |>
+   e_color(background = "#FFBF3C") |>
+  e_animation(duration = 2200, easing = "cubicOut")
+
+```
+:::
+::::
 
 ### Section 6: Legislation
 
