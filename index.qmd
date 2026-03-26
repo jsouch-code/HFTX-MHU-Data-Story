@@ -533,7 +533,9 @@ m <- leaflet(width = "68vw", height = "85vh", options = leafletOptions(zoomContr
     fillColor = "#FFBF3C",
     weight = 2, color = "white",
     fillOpacity = 0.70, stroke = TRUE) |>
-      addTiles(urlTemplate = mapboxmap, attribution = mb_attribution)
+      addTiles(urlTemplate = mapboxmap, attribution = mb_attribution) |>
+      addProviderTiles("CartoDB.PositronOnlyLabels")
+
 
 
 # Attach JS: slow trace + gradient + moving PNG marker
