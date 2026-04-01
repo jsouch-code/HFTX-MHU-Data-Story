@@ -132,7 +132,7 @@ m <- leaflet(
   setView(
     lng = center_lng - 3,
     lat = center_lat,
-    zoom = 6.4999
+    zoom = 6.1999
   ) |>
   setMaxBounds(
     lng1 = -106.6,
