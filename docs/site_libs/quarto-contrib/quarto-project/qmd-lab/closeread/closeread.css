@@ -88,7 +88,7 @@ body {
   transition: opacity linear 0.3s;
 }
 .cr-section .sticky-col .sticky-col-stack .cr-active.cr-hl-within div.line-block span[id^=lb] {
-  color: rgba(0, 0, 0, 0.4);
+  color: #53284f;
   transition: color 0.7s linear;
 }
 .cr-section .sticky-col .sticky-col-stack .cr-active.cr-hl-within div.line-block span[id^=lb].cr-hl {
@@ -272,7 +272,7 @@ body.cr-removeheaderspace #quarto-content main#quarto-document-content .quarto-t
   --cr-narrative-background-color-overlay: #0075A9E6;
   --cr-narrative-text-color-overlay: white;
   --cr-narrative-background-color-sidebar: transparent;
-  --cr-narrative-text-color-sidebar: black;
+  --cr-narrative-text-color-sidebar: #53284f;
   --cr-narrative-border-radius: 1em;
   --cr-narrative-overlay-max-width: 527.98px;
   --cr-narrative-overlay-min-width: none;
@@ -290,11 +290,13 @@ body.cr-removeheaderspace #quarto-content main#quarto-document-content .quarto-t
 /* Apply Rubik to the entire document body */
 body {
   font-family: 'Rubik', sans-serif !important;
+  color: #53284f;
 }
 
 /* Optional: Apply to headings as well */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Rubik', sans-serif !important;
+  color: #53284f;
 }
 
 
