@@ -121,7 +121,7 @@ m <- leaflet(
     zoomDelta = 0.5,
     zoomSnap = 0,
     dragging = FALSE,
-    minZoom = 6.2999,
+    minZoom = 6.1999,
     scrollWheelZoom = FALSE
   )
 ) |>
