@@ -1007,8 +1007,12 @@ df |>
 ### Legislation
 
 
-::: {.cr-section .emphasis-section layout="overlay-left"}
+::: {.cr-section .emphasis-section layout="overlay-center"}
 @cr-myimage-capitol
+During the 89th Legislative Session, the Texas Women’s Healthcare Coalition and its partners secured \$20 million in new state funding to expand mobile women's health units across Texas, doubling down on a commitment to meet women where they are. 
+
+This investment represents \$10 million more than the amount secured in 2023, signaling growing legislative recognition of mobile healthcare as a critical solution to access gaps. This funding is the direct result of sustained, collective advocacy and a willingness by providers to find innovative solutions to reach the counties around them.
+ 
 
 ::: {#cr-myimage-capitol}
 ```{=html}
@@ -1031,7 +1035,6 @@ df |>
 :::
 
 
-During the 89th Legislative Session, the Texas Women’s Healthcare Coalition and its partners secured \$20 million in new state funding to expand mobile women's health units across Texas, doubling down on a commitment to meet women where they are. This investment represents \$10 million more than the amount secured in 2023, signaling growing legislative recognition of mobile healthcare as a critical solution to access gaps. This funding is the direct result of sustained, collective advocacy and a willingness by providers to find innovative solutions to reach the counties around them.
 
 
 ### On the Ground
