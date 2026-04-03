@@ -1004,35 +1004,8 @@ df |>
 :::
 ::::
 
-### Legislation
 
 
-::: {.cr-section .emphasis-section layout="overlay-center"}
-@cr-myimage-capitol
-During the 89th Legislative Session, the Texas Women’s Healthcare Coalition and its partners secured \$20 million in new state funding to expand mobile women's health units across Texas, doubling down on a commitment to meet women where they are. 
-
-This investment represents \$10 million more than the amount secured in 2023, signaling growing legislative recognition of mobile healthcare as a critical solution to access gaps. This funding is the direct result of sustained, collective advocacy and a willingness by providers to find innovative solutions to reach the counties around them.
- 
-
-::: {#cr-myimage-capitol}
-```{=html}
-
-
-<style>
-.hero-video { width: 100%; height: 100vh; overflow: hidden; }
-.hero-video video { width: 100vw; height: 100%; object-fit: cover; display: block; }
-</style>
-
-<div class="hero-video">
-  <video autoplay muted loop playsinline preload="auto">
-    <source src="Capitol Video.mp4" type="video/mp4">
-  </video>
-</div>
-
-```
-:::
-
-:::
 
 
 
@@ -1087,7 +1060,54 @@ Scroll on. [@cr-mytext3]{hlz="cr-t1,cr-t2"}
 
 
 
-### What’s Next
 
 ::: {style="text-align: center;"}
 :::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Legislation
+
+
+::: {.cr-section .emphasis-section layout="overlay-center"}
+@cr-myimage-capitol
+During the 89th Legislative Session, the Texas Women’s Healthcare Coalition and its partners secured \$20 million in new state funding to expand mobile women's health units across Texas, doubling down on a commitment to meet women where they are. 
+
+This investment represents \$10 million more than the amount secured in 2023, signaling growing legislative recognition of mobile healthcare as a critical solution to access gaps. This funding is the direct result of sustained, collective advocacy and a willingness by providers to find innovative solutions to reach the counties around them.
+ 
+
+::: {#cr-myimage-capitol}
+```{=html}
+
+
+<style>
+.hero-video { width: 100%; height: 100vh; overflow: hidden; }
+.hero-video video { width: 100vw; height: 100%; object-fit: cover; display: block; }
+</style>
+
+<div class="hero-video">
+  <video autoplay muted loop playsinline preload="auto">
+    <source src="Capitol Video.mp4" type="video/mp4">
+  </video>
+</div>
+
+```
+:::
+
+:::
+
