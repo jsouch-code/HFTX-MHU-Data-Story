@@ -296,7 +296,7 @@ body {
 /* Optional: Apply to headings as well */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Rubik', sans-serif !important;
-  color: #53284f;
+  color: #d24699;
 }
 
 
@@ -305,7 +305,7 @@ h3, h4, h5, h6 {
   position: sticky;
   top: 1%;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.80);
+  background-color: #F8F5FA;
   padding: 0.5rem 1rem;
   border-radius: 10px;
   width: 100vw;
