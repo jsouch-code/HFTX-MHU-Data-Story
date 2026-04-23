@@ -144,6 +144,38 @@ texas_map$population[is.na(texas_map$population)] <- min_val
 pal_pop <- colorNumeric(palette = c("#efe9ef", "#53284F"), domain = texas_map$population)
 pal_perk <- colorNumeric(palette = c("#efe9ef", "#53284F"), domain = texas_map$PWCT_TX_2023_total_PerK)
 
+fpp_cluster_opts <- markerClusterOptions(
+  iconCreateFunction = JS(
+    "function(cluster) {
+      var count = cluster.getChildCount();
+      var bg = count < 10 ? 'rgba(102, 187, 106, 0.85)'
+               : count < 50 ? 'rgba(67, 160, 71, 0.9)'
+               : 'rgba(46, 125, 50, 0.95)';
+      return new L.DivIcon({
+        html: '<div style=\"background:' + bg + ';\"><span>' + count + '</span></div>',
+        className: 'marker-cluster marker-cluster-fpp',
+        iconSize: new L.Point(40, 40)
+      });
+    }"
+  )
+)
+
+htw_cluster_opts <- markerClusterOptions(
+  iconCreateFunction = JS(
+    "function(cluster) {
+      var count = cluster.getChildCount();
+      var bg = count < 10 ? 'rgba(255, 183, 77, 0.85)'
+               : count < 50 ? 'rgba(255, 152, 0, 0.9)'
+               : 'rgba(230, 81, 0, 0.95)';
+      return new L.DivIcon({
+        html: '<div style=\"background:' + bg + ';\"><span>' + count + '</span></div>',
+        className: 'marker-cluster marker-cluster-htw',
+        iconSize: new L.Point(40, 40)
+      });
+    }"
+  )
+)
+
 m <- leaflet(
   elementId = "test_map",
   height = "85vh",
@@ -246,20 +278,32 @@ m <- leaflet(
     )
   ) |>
 
-  addMarkers(
+  addCircleMarkers(
     data = providers[providers$Grantee == "FPP", ],
     lat = ~Latitude,
     lng = ~Longitude,
     popup = ~paste0(Provider.Name, " is an FPP provider."),
-    clusterOptions = markerClusterOptions(),
+    radius = 6,
+    stroke = TRUE,
+    weight = 1,
+    color = "#2E7D32",
+    fillColor = "#66BB6A",
+    fillOpacity = 0.9,
+    clusterOptions = fpp_cluster_opts,
     group = "FPP Providers"
   ) |>
-  addMarkers(
+  addCircleMarkers(
     data = providers[providers$Grantee == "HTW", ],
     lat = ~Latitude,
     lng = ~Longitude,
     popup = ~paste0(Provider.Name, " is an HTW provider."),
-    clusterOptions = markerClusterOptions(),
+    radius = 6,
+    stroke = TRUE,
+    weight = 1,
+    color = "#E65100",
+    fillColor = "#FFB74D",
+    fillOpacity = 0.9,
+    clusterOptions = htw_cluster_opts,
     group = "HTW Providers"
   ) |>
 
@@ -1164,4 +1208,3 @@ This investment represents \$10 million more than the amount secured in 2023, si
 :::
 
 :::
-
