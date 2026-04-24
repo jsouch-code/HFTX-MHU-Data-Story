@@ -37,6 +37,8 @@ These barriers make timely, comprehensive healthcare out of reach for many, unde
 ::: progress-block
 
 That’s where mobile health care units come in. @cr-myimage1
+
+Scroll through this story to learn more
 :::
 
 
@@ -114,9 +116,20 @@ This map shows the population of women of reproductive age (15-49) in 2023. @cr-
 **Providers per 1,000**\
 This map shows the ratio of providers – such as doctors, nurses practitioners, or physician assistants – with at least 10 new birth control prescriptions per 1,000 women of reproductive age in 2023. 
 
-FPP Providers. @cr-map
+**The Family Planning Program**\ 
+The Family Planning Program is a General Revenue-funded, limited-benefit program that serves uninsured men and women across Texas. 
+\n Services covered include:
+\n• Birth control
+\n• Cancer screenings
+\n• Chronic disease testing & treatment
+@cr-map
 
-HTW Providers. @cr-map
+**Healthy Texas Women (HTW)**\
+Healthy Texas Women (HTW) is a Medicaid waiver, limited-benefit program that provides healthcare and family planning services to women aged 15-44 with low income and no insurance. 
+\n Services covered include:
+\n • Birth control
+\n • Cancer screenings
+\n • Chronic disease testing  & treatment @cr-map
 
 ::: {#cr-map}
 ```{r}
@@ -1121,7 +1134,7 @@ Learn more. @cr-mytext3
 | — Dr. Perales, DNP, APRN, CNS-BC
 | Clinic Service Director, STFPHC
 |                               
-Scroll on. [@cr-mytext3]{hlz="cr-t1,cr-t2"} 
+Scroll on. [@cr-mytext3]{highlight="cr-t1,cr-t2"} 
 :::
 
 

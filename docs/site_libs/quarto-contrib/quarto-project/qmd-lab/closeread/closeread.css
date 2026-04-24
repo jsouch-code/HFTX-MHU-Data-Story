@@ -297,7 +297,7 @@ body {
 h2, h3, h4, h5, h6 {
   font-family: 'Rubik', sans-serif !important;
   color: #d24699;
-  width: 50vw;
+  max-width: var(--cr-narrative-overlay-max-width);
   margin: 0 auto;
   text-align: center;
 }
@@ -305,7 +305,7 @@ h2, h3, h4, h5, h6 {
 h1 {
   font-family: 'Rubik', sans-serif !important;
   color: #d24699;
-  width: 50vw;
+  max-width: var(--cr-narrative-overlay-max-width);
   margin: 0 auto;
   text-align: center;
   font-size: 40px;
@@ -429,4 +429,13 @@ h3, h4, h5, h6 {
 .cr-section .narrative,
 .cr-section .narrative * {
   pointer-events: auto !important;
+}
+
+#quarto-document-content h1,
+#quarto-document-content h2,
+#quarto-document-content h3,
+#quarto-document-content p {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
