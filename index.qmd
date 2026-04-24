@@ -66,7 +66,7 @@ That’s where mobile health care units come in. @cr-myimage1
 ### Health Outcomes
 
 
-::: {.cr-section .quote-section .hide-quote-narrative layout="overlay-center"}
+::: {.cr-section .quote-section .hide-narrative layout="overlay-center"}
 Learn more. @cr-mytext1
 
 | {#cr-mytext1 .cr-text .scale-to-fill}
@@ -107,7 +107,7 @@ Learn more. @cr-mytext2
 :::
 ### Mapping Need
 
-:::: {.cr-section layout="sidebar-left"}
+:::: {.cr-section layout="overlay-center"}
 **Population**\
 This map shows the population of women of reproductive age (15-49) in 2023. @cr-map
 
@@ -147,8 +147,8 @@ pal_perk <- colorNumeric(palette = c("#efe9ef", "#53284F"), domain = texas_map$P
 
 m <- leaflet(
   elementId = "test_map",
-  height = "85vh",
-  width  = "68vw",
+  height = "99vh",
+  width  = "99vw",
   options = leafletOptions(
     zoomDelta = 0.5,
     zoomSnap = 0,
@@ -490,21 +490,11 @@ Keep scrolling. @cr-mytext0
 | {#cr-mytext0 .cr-text .scale-to-fill}
 | **Voices of Patients:**,
 | 
-| “I got scared after my neighbor
-| died of breast cancer. She came to me one day
-| and showed me her left breast.
-| I told her she needed to go to
-| a doctor, but it was too late.
-| She suffered for a year and died
-| of breast cancer, because she
-| [couldn’t find the right medical services]{#cr-t1}.
-| I then decided I needed to find a way to
-| live for my family.When I discovered your clinic and 
-| learned about the services you all provide,
-| [I found hope again]{#cr-t2}.
-| I feel that my health is important to my family, 
-| because without me, I don’t know how they would
-| be able to take care of themselves.”
+| “I got scared after my neighbor died of breast cancer. She came to me one day and showed me her left breast.
+| I told her she needed to go to a doctor, but it was too late. She suffered for a year and died of breast cancer, because she
+| [couldn’t find the right medical services]{#cr-t1}. I then decided I needed to find a way to live for my family.When I discovered your clinic and 
+| learned about the services you all provide, [I found hope again]{#cr-t2}. I feel that my health is important to my family, 
+| because without me, I don’t know how they would be able to take care of themselves.”
 
                             
 Keep scrolling. [@cr-mytext0]{hlz="cr-t1,cr-t2"} 
@@ -514,10 +504,14 @@ Keep scrolling. [@cr-mytext0]{hlz="cr-t1,cr-t2"}
 
 ### Showing Where They Go
 
-:::: {.cr-section layout="sidebar-left"}
-Route animation Explaining how mobile units can go to places where there aren’t brick and mortar @cr-map2
+:::: {.cr-section layout="overlay-center"}
+@cr-map2 A single mobile health unit can extend care across multiple counties that aren’t served by brick-and-mortar clinics. 
 
-A single mobile health unit can extend care across multiple counties that aren’t served by brick-and-mortar clinics. This map illustrates how mobile units move across regions with limited or no permanent healthcare infrastructures, reaching women who would otherwise face transportation barriers, or even no access at all.
+This map illustrates how mobile units move across regions with limited or no permanent healthcare infrastructures, reaching women who would otherwise face transportation barriers, or even no access at all.
+
+You can scroll around and zoom in and out.
+
+
 
 ::: {#cr-map2}
 ```{r map2}
@@ -568,7 +562,7 @@ routes_geojson_txt_safe <- gsub("`", "\\\\`", routes_geojson_txt_safe)
 marker_png_safe <- gsub("\\\\", "/", marker_png)
 
 # Build Leaflet widget
-m <- leaflet(width = "68vw", height = "85vh", options = leafletOptions(zoomControl = TRUE)) %>%
+m <- leaflet(width = "99vw", height = "99vh", options = leafletOptions(zoomControl = TRUE)) %>%
   addPolygons(
     data = texas_map,
     group = "Population",                 # baseGroups label
@@ -1114,12 +1108,9 @@ df |>
 ::: {.cr-section .quote-section .hide-narrative layout="overlay-left"}
 Learn more. @cr-mytext3
 
-| {#cr-mytext3 .cr-text .scale-to-fill}
-| "Now we're able to do a [full clinic]{#cr-t1},
-| just like a brick-and-mortar clinic,
-| [just on wheels]{#cr-t2}."
-| — Dr. Perales, DNP, APRN, CNS-BC
-| Clinic Service Director, STFPHC
+| {#cr-mytext3 .cr-text .scale-to-fill} 
+| "Now we're able to do a [full clinic]{#cr-t1}, just like a brick-and-mortar clinic, [just on wheels]{#cr-t2}."
+| — Dr. Perales, DNP, APRN, CNS-BC, Clinic Service Director, STFPHC
 |                               
 Scroll on. [@cr-mytext3]{hlz="cr-t1,cr-t2"} 
 :::
