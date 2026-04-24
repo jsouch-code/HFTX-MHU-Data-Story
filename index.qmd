@@ -114,9 +114,21 @@ This map shows the population of women of reproductive age (15-49) in 2023. @cr-
 **Providers per 1,000**\
 This map shows the ratio of providers – such as doctors, nurses practitioners, or physician assistants – with at least 10 new birth control prescriptions per 1,000 women of reproductive age in 2023. 
 
-FPP Providers. @cr-map
 
-HTW Providers. @cr-map
+**The Family Planning Program** is a General Revenue-funded, limited-benefit program that serves uninsured men and women across Texas.  
+Services covered include:  
+• Birth control  
+• Cancer screenings  
+• Chronic disease testing & treatment  @cr-map
+
+
+
+
+**Healthy Texas Women (HTW)** is a Medicaid waiver, limited-benefit program that provides healthcare and family planning services to women aged 15-44 with low income and no insurance.  
+Services covered include:  
+• Birth control  
+• Cancer screenings  
+• Chronic disease testing  & treatment  @cr-map
 
 ::: {#cr-map}
 ```{r}
@@ -153,7 +165,7 @@ m <- leaflet(
     zoomDelta = 0.5,
     zoomSnap = 0,
     dragging = FALSE,
-    minZoom = 5.5,
+    minZoom = 6.199,
     scrollWheelZoom = FALSE
   )
 ) |>
@@ -164,7 +176,7 @@ m <- leaflet(
   setView(
     lng = center_lng - 3,
     lat = center_lat,
-    zoom = 5.5
+    zoom = 6.199
   ) |>
   setMaxBounds(
     lng1 = -106.6,
@@ -231,7 +243,6 @@ m <- leaflet(
       CNTY_NM,
       "County in 2023 with 10 new birth control prescriptions per 1,000 women of reproductive age in 2023."
     ),
-    popup = ~paste(CNTY_NM, "County"),
     labelOptions = labelOptions(
       direction = "auto",
       textsize = "14px",
