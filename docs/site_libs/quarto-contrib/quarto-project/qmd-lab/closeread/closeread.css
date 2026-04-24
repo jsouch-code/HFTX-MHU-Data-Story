@@ -395,7 +395,7 @@ h1 {
 
 /* h2 — stacked under h1 */
 h2 {
-  top: 5%;
+  top: 2%;
   background-color:white;
   padding-left:5%;
   z-index: 1000;
@@ -405,7 +405,7 @@ h2 {
 h3, h4, h5, h6 {
   font-family: 'Rubik', sans-serif !important;
   position: sticky;
-  top: 88px; /* h1 + h2 */
+  top: 5%; /* h1 + h2 */
   z-index: 998;
 
   color: #d24699;

@@ -159,7 +159,7 @@ pal_perk <- colorNumeric(palette = c("#efe9ef", "#53284F"), domain = texas_map$P
 
 m <- leaflet(
   elementId = "test_map",
-  height = "99vh",
+  height = "75vh",
   width  = "99vw",
   options = leafletOptions(
     zoomDelta = 0.5,
@@ -287,6 +287,7 @@ m <- leaflet(
     values = texas_map$population,
     title = "Population of women (15–49)",
     opacity = 1,
+    position = "bottomleft",
     group = "Population",
     className = "legend-pop"
   ) |>
@@ -297,6 +298,7 @@ m <- leaflet(
   title = "Total providers per 1,000 women (15–49)",
   opacity = 1,
   group = "Total Providers per 1,000 Women 15-49",
+  position = "bottomleft",
   className = "legend-perk"
 )|>
   setMapWidgetStyle(list(background = "white")) |>
@@ -573,7 +575,7 @@ routes_geojson_txt_safe <- gsub("`", "\\\\`", routes_geojson_txt_safe)
 marker_png_safe <- gsub("\\\\", "/", marker_png)
 
 # Build Leaflet widget
-m <- leaflet(width = "99vw", height = "99vh", options = leafletOptions(zoomControl = TRUE)) %>%
+m <- leaflet(width = "99vw", height = "99vh", options = leafletOptions(zoomControl = FALSE, scrollWheelZoom = FALSE)) %>%
   addPolygons(
     data = texas_map,
     group = "Population",                 # baseGroups label
@@ -581,7 +583,9 @@ m <- leaflet(width = "99vw", height = "99vh", options = leafletOptions(zoomContr
     weight = 2, color = "white",
     fillOpacity = 0.70, stroke = TRUE) |>
       addTiles(urlTemplate = mapboxmap, attribution = mb_attribution) |>
-      addProviderTiles("CartoDB.PositronOnlyLabels")
+      addProviderTiles("CartoDB.PositronOnlyLabels") |>
+    addResetMapButton()
+
 
 
 
