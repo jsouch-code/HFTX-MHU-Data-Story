@@ -503,11 +503,7 @@ Keep scrolling. @cr-mytext0
 | {#cr-mytext0 .cr-text .scale-to-fill}
 | **Voices of Patients:**,
 | 
-| “I got scared after my neighbor died of breast cancer. She came to me one day and showed me her left breast.
-| I told her she needed to go to a doctor, but it was too late. She suffered for a year and died of breast cancer, because she
-| [couldn’t find the right medical services]{#cr-t1}. I then decided I needed to find a way to live for my family.When I discovered your clinic and 
-| learned about the services you all provide, [I found hope again]{#cr-t2}. I feel that my health is important to my family, 
-| because without me, I don’t know how they would be able to take care of themselves.”
+| “I got scared after my neighbor died of breast cancer. She came to me one day and showed me her left breast. I told her she needed to go to a doctor, but it was too late. She suffered for a year and died of breast cancer, because she [couldn’t find the right medical services]{#cr-t1}. I then decided I needed to find a way to live for my family.When I discovered your clinic and I learned about the services you all provide, [I found hope again]{#cr-t2}. I feel that my health is important to my family, because without me, I don’t know how they would be able to take care of themselves.”
 
                             
 Keep scrolling. [@cr-mytext0]{hlz="cr-t1,cr-t2"} 
@@ -524,6 +520,7 @@ This map illustrates how mobile units move across regions with limited or no per
 
 You can scroll around and zoom in and out.
 
+By 2026, South Texas Family Planning & Health Corporation (STFPHC) had grown to operate a second mobile unit and was approved to serve 29 counties—demonstrating both the success of mobile health services and the increasing demand for accessible care.
 
 
 ::: {#cr-map2}
@@ -533,6 +530,7 @@ You can scroll around and zoom in and out.
 #| warning: false
 library(sf)
 library(dplyr)
+library(leaflet.extras)
 library(leaflet)
 library(rmapshaper)
 library(htmlwidgets)
@@ -549,6 +547,13 @@ mapboxmap <- "https://api.mapbox.com/styles/v1/hftx1/cmlzl9xiy004y01rz2bix892g/t
 mb_attribution <- "© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
 
 
+highlight_counties <- c(
+  "Atascosa","Aransas","Bastrop","Bee","Bexar","Brooks","Cameron",
+  "Comal","Dimmit","Goliad","Gonzales","Guadalupe","Hidalgo",
+  "Jackson","Jim Wells","Kendall","Kerr","Kleberg","Live Oak",
+  "Maverick","Nueces","San Patricio","Starr","Travis","Victoria",
+  "Webb","Williamson","Zapata","Zavala"
+)
 
 
 routes_sf <- st_read("roads_route.gpkg", quiet = TRUE)
@@ -574,6 +579,9 @@ routes_geojson_txt_safe <- gsub("`", "\\\\`", routes_geojson_txt_safe)
 # Safe embed for marker URL (quotes)
 marker_png_safe <- gsub("\\\\", "/", marker_png)
 
+highlight_map <- texas_map |>
+  dplyr::filter(CNTY_NM %in% highlight_counties)
+
 # Build Leaflet widget
 m <- leaflet(width = "99vw", height = "99vh", options = leafletOptions(zoomControl = FALSE, scrollWheelZoom = FALSE)) %>%
   addPolygons(
@@ -584,7 +592,26 @@ m <- leaflet(width = "99vw", height = "99vh", options = leafletOptions(zoomContr
     fillOpacity = 0.70, stroke = TRUE) |>
       addTiles(urlTemplate = mapboxmap, attribution = mb_attribution) |>
       addProviderTiles("CartoDB.PositronOnlyLabels") |>
-    addResetMapButton()
+    addResetMapButton() |>
+  addPolygons(
+    data = highlight_map,
+    group = "Highlighted Counties",
+    fillColor = "#53284F",   # strong contrast
+    weight = 2,
+    color = "white",
+    fillOpacity = 0.6,
+    stroke = TRUE
+  ) %>%
+  
+   addLayersControl(
+    baseGroups = c("Population"),
+    overlayGroups = c("Highlighted Counties"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) %>%
+  
+  addResetMapButton()
+
+
 
 
 

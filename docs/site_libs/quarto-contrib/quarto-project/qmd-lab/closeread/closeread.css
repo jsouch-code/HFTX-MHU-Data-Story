@@ -479,7 +479,8 @@ h3, h4, h5, h6 {
 .quote-section .callout {
   background: transparent !important;
   color: #fff !important;
-  padding: 3rem 4rem !important;
+  width:80;
+  padding: 4rem 5rem  !important;
 }
 
 .cr-hover-content .tip{
