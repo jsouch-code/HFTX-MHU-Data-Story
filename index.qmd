@@ -2,13 +2,13 @@
 format: closeread-html
 ---
 
-# THE GEOGRAPHY OF HEALTHCARE
+# The geography of healthcare.
 
-## MOBILE WOMEN’S HEALTH CLINICS IN TEXAS
+## Mobile women's health clinics in texas.
 
-### Highlighting Need
+### Highlighting need.
 
-Across the 268,597 square miles of Texas, access to women’s healthcare is deeply uneven. Large regions of the state function as “healthcare deserts,” where high- population communities have few or sometimes no access to nearby clinics providing essential services like contraception, cancer screenings, and preventive care. Many rural Texans face long travel distances, limited transportation options, and months-long wait times.
+Across the [268,597 square miles of Texas]{.key-number}, access to women’s healthcare is deeply uneven. Large regions of the state function as “healthcare deserts,” where high- population communities have few or sometimes no access to nearby clinics providing essential services like contraception, cancer screenings, and preventive care. Many rural Texans face long travel distances, limited transportation options, and months-long wait times.
 
 ::: {.cr-section .emphasis-section layout="overlay-center"}
 ::: progress-block
@@ -63,7 +63,7 @@ That’s where mobile health care units come in. @cr-myimage1
 
 :::::
 
-### Health Outcomes
+### Health outcomes.
 
 
 ::: {.cr-section .quote-section .hide-narrative layout="overlay-center"}
@@ -105,7 +105,7 @@ Learn more. @cr-mytext2
 [@cr-mytext2]{highlight="cr-t5,cr-t6"} Keep scrolling. 
 
 :::
-### Mapping Need
+### Mapping need.
 
 :::: {.cr-section layout="overlay-center"}
 **Population**\
@@ -489,7 +489,7 @@ m
 
 ```
 
-### Introduction to Mobile Clinics
+### Intro to mobile clinics.
 
 Mobile healthcare units are designed to close gaps by bringing services directly to patients and communities, especially in rural areas. Mobile clinics reduce the distance, time, and cost barriers that prevent many women from accessing care. Mobile clinics set up in trusted community spaces and adapt their routes based on need. They offer a flexible, efficient way to deliver essential women’s health services, such as birth control, cancer screenings, prenatal care, and preventive visits. For women who don’t have reliable access to transportation, mobile clinics can be a literal lifeline. When speaking to patients, they praise the convenience, as they are no longer required to travel hours from home, miss work, school, or childcare. Mobile clinics don’t just expand access; they help ensure care happens earlier, more consistently, and on patients’ terms.
 
@@ -513,7 +513,7 @@ Keep scrolling. [@cr-mytext0]{hlz="cr-t1,cr-t2"}
 
 
 
-### Showing Where They Go
+### Where do they go?
 
 :::: {.cr-section layout="overlay-center"}
 @cr-map2 A single mobile health unit can extend care across multiple counties that aren’t served by brick-and-mortar clinics. 
@@ -1027,7 +1027,7 @@ df <- data.frame(
   )
 
 df |>
-  e_charts(sex, height = "800px", width = "100vw") |>
+  e_charts(sex, height = "100vh", width = "100vw") |>
   e_pie(
     value,
     radius = c("0%", "55%"),
@@ -1064,7 +1064,7 @@ df |>
       color = "#53284F"
     )
   ) |>
-  e_color(background = "white") |>
+  e_color(background = "#FFBF3C") |>
   e_text_style(color = "#53284F") |>
   e_animation(duration = 2200, easing = "cubicOut")
 ```
@@ -1077,7 +1077,7 @@ df |>
 
 
 
-### On the Ground
+### On the ground.
 
 ::: column-screen
 ```{=html}
@@ -1154,9 +1154,9 @@ Scroll on. [@cr-mytext3]{hlz="cr-t1,cr-t2"}
 
 ::: {.cr-section .emphasis-section layout="overlay-center"}
 @cr-myimage-capitol
-During the 89th Legislative Session, the Texas Women’s Healthcare Coalition and its partners secured \$20 million in new state funding to expand mobile women's health units across Texas, doubling down on a commitment to meet women where they are. 
+During the 89th Legislative Session, the Texas Women’s Healthcare Coalition and its partners secured [\$20 million]{.key-number1} in new state funding to expand mobile women's health units across Texas, doubling down on a commitment to meet women where they are. 
 
-This investment represents \$10 million more than the amount secured in 2023, signaling growing legislative recognition of mobile healthcare as a critical solution to access gaps. This funding is the direct result of sustained, collective advocacy and a willingness by providers to find innovative solutions to reach the counties around them.
+This investment represents [\$10 million more]{.key-number1} than the amount secured in 2023, signaling growing legislative recognition of mobile healthcare as a critical solution to access gaps. This funding is the direct result of sustained, collective advocacy and a willingness by providers to find innovative solutions to reach the counties around them.
  
 
 ::: {#cr-myimage-capitol}
