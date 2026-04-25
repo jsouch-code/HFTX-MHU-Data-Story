@@ -709,8 +709,6 @@ js_code <- paste0(
 "  }
 
 ",
-"  var group = L.layerGroup().addTo(map);
-",
 "  var markerIcon = L.icon({
 ",
 "    iconUrl: '", marker_png_safe, "',
@@ -720,10 +718,6 @@ js_code <- paste0(
 "    iconAnchor: [", round(marker_w/2), ", ", marker_h, "]
 ",
 "  });
-",
-"  var tracer = null;
-",
-"  var tracerHeading = null;
 ",
 "  var headingSmoothing = 0.18;
 ",
@@ -753,8 +747,6 @@ js_code <- paste0(
 
 ",
 "  function buildTracerTooltip(feature, distanceDriven) {
-",
-"    var props = (feature && feature.properties) ? feature.properties : {};
 ",
 "    return [
 ",
@@ -791,21 +783,21 @@ js_code <- paste0(
 ",
 "  }
 ",
-"  function smoothHeading(targetDeg) {
+"  function smoothHeading(unitState, targetDeg) {
 ",
-"    if (tracerHeading === null) { tracerHeading = targetDeg; return tracerHeading; }
+"    if (unitState.heading === null) { unitState.heading = targetDeg; return unitState.heading; }
 ",
-"    var delta = wrapAngle180(targetDeg - tracerHeading);
+"    var delta = wrapAngle180(targetDeg - unitState.heading);
 ",
-"    if (Math.abs(delta) < headingMinDelta) return tracerHeading;
+"    if (Math.abs(delta) < headingMinDelta) return unitState.heading;
 ",
-"    tracerHeading = tracerHeading + (delta * headingSmoothing);
+"    unitState.heading = unitState.heading + (delta * headingSmoothing);
 ",
-"    return tracerHeading;
+"    return unitState.heading;
 ",
 "  }
 ",
-"  function setTracerRotation(marker, angleDeg) {
+"  function setTracerRotation(unitState, marker, angleDeg) {
 ",
 "    if (!marker || !marker._icon) return;
 ",
@@ -817,7 +809,7 @@ js_code <- paste0(
 ",
 "    el.style.transformOrigin = '50% 100%';
 ",
-"    var shownDeg = smoothHeading(angleDeg);
+"    var shownDeg = smoothHeading(unitState, angleDeg);
 ",
 "    el.style.transform = base + ' rotate(' + shownDeg.toFixed(2) + 'deg)';
 ",
@@ -891,15 +883,15 @@ js_code <- paste0(
 "  }
 
 ",
-"  function drawPartSlow(pts, gradientState, feature, done) {
+"  function drawPartSlow(unitState, pts, gradientState, feature, done) {
 ",
 "    if (!pts || pts.length < 2) { done(); return; }
 ",
-"    if (!tracer) {
+"    if (!unitState.tracer) {
 ",
-"      tracer = L.marker([pts[0][1], pts[0][0]], { icon: markerIcon }).addTo(map);
+"      unitState.tracer = L.marker([pts[0][1], pts[0][0]], { icon: markerIcon }).addTo(map);
 ",
-"      tracer.bindPopup(buildTracerTooltip(feature, gradientState.baseDistanceDriven), {
+"      unitState.tracer.bindPopup(buildTracerTooltip(feature, gradientState.baseDistanceDriven), {
 ",
 "        closeButton: true, autoClose: false, closeOnClick: false,
 ",
@@ -907,19 +899,19 @@ js_code <- paste0(
 ",
 "      });
 ",
-"      tracer.openPopup();
+"      if (unitState.showPopup) unitState.tracer.openPopup();
 ",
 "    } else {
 ",
-"      tracer.setLatLng([pts[0][1], pts[0][0]]);
+"      unitState.tracer.setLatLng([pts[0][1], pts[0][0]]);
 ",
-"      tracer.setPopupContent(buildTracerTooltip(feature, gradientState.baseDistanceDriven));
+"      unitState.tracer.setPopupContent(buildTracerTooltip(feature, gradientState.baseDistanceDriven));
 ",
 "    }
 ",
-"    tracerHeading = null;
+"    unitState.heading = null;
 ",
-"    setTracerRotation(tracer, bearingDeg(pts[0], pts[1]));
+"    setTracerRotation(unitState, unitState.tracer, bearingDeg(pts[0], pts[1]));
 ",
 "    var idx = 1;
 ",
@@ -935,11 +927,11 @@ js_code <- paste0(
 ",
 "      var a = pts[idx-1], b = pts[idx];
 ",
-"      L.polyline([[a[1], a[0]], [b[1], b[0]]], { color: segColor, weight: 5, opacity: 1 }).addTo(group);
+"      L.polyline([[a[1], a[0]], [b[1], b[0]]], { color: segColor, weight: 5, opacity: 1 }).addTo(unitState.group);
 ",
-"      tracer.setLatLng([b[1], b[0]]);
+"      unitState.tracer.setLatLng([b[1], b[0]]);
 ",
-"      setTracerRotation(tracer, bearingDeg(a, b));
+"      setTracerRotation(unitState, unitState.tracer, bearingDeg(a, b));
 ",
 "      gradientState.drawnSegs++;
 ",
@@ -947,7 +939,7 @@ js_code <- paste0(
 ",
 "      var distanceDriven = gradientState.baseDistanceDriven + (gradientState.featureDistance * progress);
 ",
-"      tracer.setPopupContent(buildTracerTooltip(feature, distanceDriven));
+"      unitState.tracer.setPopupContent(buildTracerTooltip(feature, distanceDriven));
 ",
 "      idx++;
 ",
@@ -956,7 +948,7 @@ js_code <- paste0(
 "  }
 
 ",
-"  function drawRouteSlow(feature, baseDistanceDriven, done) {
+"  function drawRouteSlow(unitState, feature, baseDistanceDriven, done) {
 ",
 "    var parts = getParts(feature);
 ",
@@ -978,7 +970,7 @@ js_code <- paste0(
 ",
 "      if (p >= denseParts.length) { setTimeout(done, pauseRouteMs); return; }
 ",
-"      drawPartSlow(denseParts[p], gradientState, feature, function(){ p++; nextPart(); });
+"      drawPartSlow(unitState, denseParts[p], gradientState, feature, function(){ p++; nextPart(); });
 ",
 "    }
 ",
@@ -987,33 +979,81 @@ js_code <- paste0(
 "  }
 
 ",
-"  var i = 0;
+"  function animateAllRoutes(unitState) {
 ",
-"  var completedDistance = 0;
+"    if (unitState.started) return;
 ",
-"  function nextRoute() {
+"    unitState.started = true;
 ",
-"    if (i >= feats.length) return;
+"    var i = 0;
 ",
-"    var feature = feats[i];
+"    var completedDistance = 0;
 ",
-"    drawRouteSlow(feature, completedDistance, function(){
+"    function nextRoute() {
 ",
-"      var props = (feature && feature.properties) ? feature.properties : {};
+"      if (i >= feats.length) return;
 ",
-"      var segDist = Number(props.distance);
+"      var feature = feats[i];
 ",
-"      if (Number.isFinite(segDist)) completedDistance += segDist;
+"      drawRouteSlow(unitState, feature, completedDistance, function(){
 ",
-"      i++;
+"        var props = (feature && feature.properties) ? feature.properties : {};
 ",
-"      nextRoute();
+"        var segDist = Number(props.distance);
 ",
-"    });
+"        if (Number.isFinite(segDist)) completedDistance += segDist;
+",
+"        i++;
+",
+"        nextRoute();
+",
+"      });
+",
+"    }
+",
+"    nextRoute();
 ",
 "  }
+
 ",
-"  nextRoute();
+"  function findSecondUnitTrigger() {
+",
+"    var triggers = Array.from(document.querySelectorAll('.narrative-col .trigger'));
+",
+"    return triggers.find(function(el) {
+",
+"      var txt = (el.textContent || '').replace(/\\s+/g, ' ').trim();
+",
+"      return txt.indexOf('By 2026, South Texas Family Planning & Health Corporation (STFPHC) had grown to operate a second mobile unit') !== -1;
+",
+"    }) || null;
+",
+"  }
+
+",
+"  var firstUnit = { group: L.layerGroup().addTo(map), tracer: null, heading: null, showPopup: true, started: false };
+",
+"  var secondUnit = { group: L.layerGroup().addTo(map), tracer: null, heading: null, showPopup: false, started: false };
+",
+"  animateAllRoutes(firstUnit);
+",
+"  var secondTrigger = findSecondUnitTrigger();
+",
+"  if (secondTrigger) {
+",
+"    var triggerObserver = new IntersectionObserver(function(entries) {
+",
+"      entries.forEach(function(entry) {
+",
+"        if (entry.isIntersecting) animateAllRoutes(secondUnit);
+",
+"      });
+",
+"    }, { threshold: 0.45 });
+",
+"    triggerObserver.observe(secondTrigger);
+",
+"  }
 ",
 "}
 "
