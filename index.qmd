@@ -147,7 +147,7 @@ pal_perk <- colorNumeric(palette = c("#efe9ef", "#53284F"), domain = texas_map$P
 
 m <- leaflet(
   elementId = "test_map",
-  height = "75vh",
+  height = "80vh",
   width  = "99vw",
   options = leafletOptions(
     zoomDelta = 0.5,
