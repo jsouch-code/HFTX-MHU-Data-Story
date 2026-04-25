@@ -430,7 +430,7 @@ h2 {
 h3, h4, h5, h6 {
   font-family: 'Rubik', sans-serif !important;
   position: sticky;
-  top: 95px; /* h1 + h2 */
+  top: 90px; /* h1 + h2 */
   z-index: 998;
 
   color: #d24699;
