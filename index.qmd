@@ -87,19 +87,7 @@ Learn more. @cr-mytext1
 ::: {.cr-section .quote-section  .hide-narrative layout="overlay-center"}
 Learn more. @cr-mytext2
 
-| {#cr-mytext2 .cr-text .scale-to-fill}
-| Barriers to care extend beyond pregnancy.
-| Across Texas, [1.75 million women]{#cr-t5}
-| in need live in contraceptive deserts, where access
-| to affordable birth control is limited or nonexistent.
-| In Texas, [153,040 women]{#cr-t6} live in counties
-| without a single health center offering
-| a full range of birth control methods.
-| Together, these gaps in maternal and women’s
-| healthcare make timely,
-| comprehensive care out of reach for many,
-| underscoring the urgent need for solutions
-| that meet people where they are. 
+| {#cr-mytext2 .cr-text .scale-to-fill} Barriers to care extend beyond pregnancy. Across Texas, [1.75 million women]{#cr-t5} in need live in contraceptive deserts, where access to affordable birth control is limited or nonexistent. In Texas, [153,040 women]{#cr-t6} live in counties without a single health center offering a full range of birth control methods. Together, these gaps in maternal and women’s healthcare make timely, comprehensive care out of reach for many, underscoring the urgent need for solutions that meet people where they are. 
 
 
 [@cr-mytext2]{highlight="cr-t5,cr-t6"} Keep scrolling. 
