@@ -479,7 +479,7 @@ h3, h4, h5, h6 {
 .quote-section .callout {
   background: transparent !important;
   color: #fff !important;
-  width:80%;
+  width:fit-content;
   padding: 4rem 5rem  !important;
 }
 
