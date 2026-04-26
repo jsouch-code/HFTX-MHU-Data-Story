@@ -350,19 +350,33 @@ m
   }
 
   function modeFromActiveOverlayTrigger() {
-    const idx = (typeof crTriggerIndex === "number") ? crTriggerIndex : -1;
-    const triggers = Array.from(document.querySelectorAll(".new-trigger"));
-    const trigger = triggers[idx];
-    if (!trigger) return null;
+    const mapEl = document.getElementById(mapId);
+    if (!mapEl) return null;
 
-    const focusOn = (trigger.getAttribute("data-focus-on") || "").trim();
-    if (focusOn !== "cr-map") return null;
+    const section = mapEl.closest(".cr-section") || document;
+    const triggers = Array.from(
+      section.querySelectorAll('.narrative-col .new-trigger[data-focus-on="cr-map"]')
+    );
+    if (!triggers.length) return null;
 
-    const text = (trigger.textContent || "").toLowerCase();
+    const vc = window.innerHeight / 2;
+    let best = triggers[0];
+    let bestDist = Infinity;
+
+    for (const trigger of triggers) {
+      const r = trigger.getBoundingClientRect();
+      const c = (r.top + r.bottom) / 2;
+      const d = Math.abs(c - vc);
+      if (d < bestDist) {
+        bestDist = d;
+        best = trigger;
+      }
+    }
+
+    const text = (best.textContent || "").toLowerCase();
     if (text.includes("healthy texas women")) return "htw";
     if (text.includes("family planning program")) return "fpp";
-    if (text.includes("population")) return "population";
-    return "providers";
+    return "population";
   }
 
   async function clickRadioByLabel(label) {
@@ -421,23 +435,42 @@ m
     }
   }
 
-  async function ensureReadyAndApply() {
+  async function installModeWatcher() {
     for (let i = 0; i < 120; i++) {
       if (getLeafletMap() && getLayerControlRoot()) break;
       await sleep(50);
     }
 
-    const mode = modeFromActiveOverlayTrigger();
-    if (!mode) return;
+    const installedKey = "__crMapModeWatcherInstalled";
+    if (globalThis[installedKey]) return null;
+    globalThis[installedKey] = true;
 
-    const key = "__crMapModeLastApplied";
-    if (globalThis[key] === mode) return;
-    globalThis[key] = mode;
+    const modeKey = "__crMapModeLastApplied";
+    let ticking = false;
 
-    await applyMode(mode);
+    const syncMode = async () => {
+      ticking = false;
+      const mode = modeFromActiveOverlayTrigger();
+      if (!mode) return;
+      if (globalThis[modeKey] === mode) return;
+      globalThis[modeKey] = mode;
+      await applyMode(mode);
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(syncMode);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+
+    onScroll();
+    return null;
   }
 
-  await ensureReadyAndApply();
+  await installModeWatcher();
   null
 }
 
