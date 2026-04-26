@@ -252,7 +252,7 @@ m <- leaflet(
     lng = ~Longitude,
     popup = ~paste0(Provider.Name, " is an FPP provider."),
     clusterOptions = markerClusterOptions(
-      iconCreateFunction = JS("function(cluster){ return L.divIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'marker-cluster marker-cluster-fpp', iconSize: new L.Point(40, 40) }); }")
+      iconCreateFunction = JS("function(cluster){ return L.divIcon({ html: '<div title=\"FPP\"><span>' + cluster.getChildCount() + '</span></div>', className: 'marker-cluster marker-cluster-fpp', iconSize: new L.Point(40, 40) }); }")
     ),
     group = "FPP Providers"
   ) |>
@@ -262,7 +262,7 @@ m <- leaflet(
     lng = ~Longitude,
     popup = ~paste0(Provider.Name, " is an HTW provider."),
     clusterOptions = markerClusterOptions(
-      iconCreateFunction = JS("function(cluster){ return L.divIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'marker-cluster marker-cluster-htw', iconSize: new L.Point(40, 40) }); }")
+      iconCreateFunction = JS("function(cluster){ return L.divIcon({ html: '<div title=\"HTW\"><span>' + cluster.getChildCount() + '</span></div>', className: 'marker-cluster marker-cluster-htw', iconSize: new L.Point(40, 40) }); }")
     ),
     group = "HTW Providers"
   ) |>
@@ -388,19 +388,26 @@ m
     if (input && !input.checked) input.click();
   }
 
+  async function clickOverlayByLabel(label, checked) {
+    const control = getLayerControlRoot();
+    if (!control) return;
+
+    const all = Array.from(control.querySelectorAll("label"));
+    const target = all.find(l => (l.textContent || "").trim() === label);
+    if (!target) return;
+
+    const input = target.querySelector("input[type='checkbox']");
+    if (input && input.checked !== checked) input.click();
+  }
+
   async function setOverlays({ fpp = false, htw = false }) {
     const map = getLeafletMap();
+    await clickOverlayByLabel(overlayLabels[0], fpp);
+    await clickOverlayByLabel(overlayLabels[1], htw);
+
     if (!map) return;
-
-    try { map.hideGroup(overlayLabels[0]); } catch (e) {}
-    try { map.hideGroup(overlayLabels[1]); } catch (e) {}
-
-    if (fpp) {
-      try { map.showGroup(overlayLabels[0]); } catch (e) {}
-    }
-    if (htw) {
-      try { map.showGroup(overlayLabels[1]); } catch (e) {}
-    }
+    try { if (fpp) map.showGroup(overlayLabels[0]); else map.hideGroup(overlayLabels[0]); } catch (e) {}
+    try { if (htw) map.showGroup(overlayLabels[1]); else map.hideGroup(overlayLabels[1]); } catch (e) {}
   }
 
   function showOnlyLegend(which) {
@@ -414,15 +421,25 @@ m
 
   async function applyStep(step) {
     // 0: Population, overlays off
-    // 1+: Providers per 1,000, both overlays on
+    // 1: Providers per 1,000, overlays off
+    // 2: Providers per 1,000, FPP overlay on
+    // 3+: Providers per 1,000, HTW overlay on
     if (step === 0) {
       await clickRadioByLabel(baseLabels[0]);
       showOnlyLegend("Population");
       await setOverlays({ fpp: false, htw: false });
+    } else if (step === 1) {
+      await clickRadioByLabel(baseLabels[1]);
+      showOnlyLegend("Providers");
+      await setOverlays({ fpp: false, htw: false });
+    } else if (step === 2) {
+      await clickRadioByLabel(baseLabels[1]);
+      showOnlyLegend("Providers");
+      await setOverlays({ fpp: true, htw: false });
     } else {
       await clickRadioByLabel(baseLabels[1]);
       showOnlyLegend("Providers");
-      await setOverlays({ fpp: true, htw: true });
+      await setOverlays({ fpp: false, htw: true });
     }
   }
 
