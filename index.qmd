@@ -606,6 +606,13 @@ marker_png_safe <- gsub("\\\\", "/", marker_png)
 highlight_map <- texas_map |>
   dplyr::filter(CNTY_NM %in% highlight_counties)
 
+service_bbox <- st_bbox(highlight_map)
+service_bounds_js <- sprintf(
+  "[[%f, %f], [%f, %f]]",
+  service_bbox["ymin"], service_bbox["xmin"],
+  service_bbox["ymax"], service_bbox["xmax"]
+)
+
 # Build Leaflet widget
 m <- leaflet(width = "99vw", height = "99vh", options = leafletOptions(zoomControl = FALSE, scrollWheelZoom = FALSE, minZoom = 6.5)) %>%
   addPolygons(
@@ -691,6 +698,62 @@ js_code <- paste0(
 ",
 "  } catch(e) {}
 
+",
+"  var serviceBounds = L.latLngBounds(", service_bounds_js, ");
+",
+"  var servicePadding = [20, 20];
+",
+"  var isRefittingServiceArea = false;
+",
+"  var fullServiceZoom = map.getBoundsZoom(serviceBounds, false, servicePadding);
+",
+"  var followVanWhenZoomed = false;
+",
+"
+",
+"  function refitServiceArea() {
+",
+"    isRefittingServiceArea = true;
+",
+"    map.fitBounds(serviceBounds, { padding: servicePadding });
+",
+"    setTimeout(function(){ isRefittingServiceArea = false; }, 0);
+",
+"  }
+",
+"  function isVanVisible() {
+",
+"    if (!tracer) return false;
+",
+"    return map.getBounds().contains(tracer.getLatLng());
+",
+"  }
+",
+"  function shouldFollowVan() {
+",
+"    return tracer && map.getZoom() > (fullServiceZoom + 0.5) && isVanVisible();
+",
+"  }
+",
+"  function enforceViewportRules() {
+",
+"    if (isRefittingServiceArea) return;
+",
+"    followVanWhenZoomed = shouldFollowVan();
+",
+"    if (!followVanWhenZoomed && !map.getBounds().contains(serviceBounds)) {
+",
+"      refitServiceArea();
+",
+"    }
+",
+"  }
+",
+"  map.on('moveend zoomend', enforceViewportRules);
+",
+"  refitServiceArea();
+",
+"
 ",
 "  var pointsPerPart = 200;
 ",
@@ -962,6 +1025,12 @@ js_code <- paste0(
 "      L.polyline([[a[1], a[0]], [b[1], b[0]]], { color: segColor, weight: 3, opacity: 1, lineCap: 'round',lineJoin: 'round' }).addTo(group);
 ",
 "      tracer.setLatLng([b[1], b[0]]);
+",
+"      if (followVanWhenZoomed) {
+",
+"        map.panTo([b[1], b[0]], { animate: false });
+",
+"      }
 ",
 "      setTracerRotation(tracer, bearingDeg(a, b));
 ",
