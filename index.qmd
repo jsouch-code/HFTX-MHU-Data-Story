@@ -349,40 +349,20 @@ m
     return el ? el.querySelector(".leaflet-control-layers") : null;
   }
 
-  function getTriggersForSection() {
-    const mapEl = document.getElementById(mapId);
-    if (!mapEl) return [];
-    const section = mapEl.closest(".cr-section") || document;
-    return Array.from(section.querySelectorAll(".narrative-col .trigger"));
-  }
+  function modeFromActiveOverlayTrigger() {
+    const idx = (typeof crTriggerIndex === "number") ? crTriggerIndex : -1;
+    const triggers = Array.from(document.querySelectorAll(".new-trigger"));
+    const trigger = triggers[idx];
+    if (!trigger) return null;
 
-  function activeNarrativeMode() {
-    const mapEl = document.getElementById(mapId);
-    if (!mapEl) return "population";
+    const focusOn = (trigger.getAttribute("data-focus-on") || "").trim();
+    if (focusOn !== "cr-map") return null;
 
-    const section = mapEl.closest(".cr-section") || document;
-    const narratives = Array.from(section.querySelectorAll(".narrative-col .trigger .narrative"));
-    if (!narratives.length) return "population";
-
-    const vc = window.innerHeight / 2;
-    let best = narratives[0];
-    let bestDist = Infinity;
-
-    for (const n of narratives) {
-      const r = n.getBoundingClientRect();
-      const c = (r.top + r.bottom) / 2;
-      const d = Math.abs(c - vc);
-      if (d < bestDist) {
-        bestDist = d;
-        best = n;
-      }
-    }
-
-    const text = (best.textContent || "").toLowerCase();
+    const text = (trigger.textContent || "").toLowerCase();
     if (text.includes("healthy texas women")) return "htw";
     if (text.includes("family planning program")) return "fpp";
-    if (text.includes("providers per 1,000")) return "providers";
-    return "population";
+    if (text.includes("population")) return "population";
+    return "providers";
   }
 
   async function clickRadioByLabel(label) {
@@ -441,47 +421,23 @@ m
     }
   }
 
-  async function install() {
+  async function ensureReadyAndApply() {
     for (let i = 0; i < 120; i++) {
       if (getLeafletMap() && getLayerControlRoot()) break;
       await sleep(50);
     }
 
-    const key = "__crStepSwitchInstalled";
-    if (globalThis[key]) return null;
-    globalThis[key] = true;
+    const mode = modeFromActiveOverlayTrigger();
+    if (!mode) return;
 
-    let lastMode = "";
-    let ticking = false;
+    const key = "__crMapModeLastApplied";
+    if (globalThis[key] === mode) return;
+    globalThis[key] = mode;
 
-    const update = async () => {
-      ticking = false;
-      const mode = activeNarrativeMode();
-      if (mode === lastMode) return;
-      lastMode = mode;
-      await applyMode(mode);
-    };
-
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-
-    const triggers = getTriggersForSection();
-    if (triggers.length) {
-      const obs = new MutationObserver(onScroll);
-      for (const t of triggers) obs.observe(t, { attributes: true, attributeFilter: ["class", "style"] });
-    }
-
-    await update();
-    return null;
+    await applyMode(mode);
   }
 
-  await install();
+  await ensureReadyAndApply();
   null
 }
 
