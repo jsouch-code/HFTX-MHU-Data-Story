@@ -70,15 +70,7 @@ That’s where mobile health care units come in. @cr-myimage1
 Learn more. @cr-mytext1
 
 | {#cr-mytext1 .cr-text .scale-to-fill}
-| The impact on women’s health has been
-| especially severe. Nearly half of
-| Texas counties (46.5%) are classified as
-| [maternity care deserts]{#cr-t1},
-| meaning they lack access to birthing facilities
-| or maternity care providers altogether.
-| For thousands of women, even basic
-| pregnancy care requires
-| traveling far from home.
+| The impact on women’s health has been especially severe. Nearly half of Texas counties (46.5%) are classified as [maternity care deserts]{#cr-t1}, meaning they lack access to birthing facilities or maternity care providers altogether. For thousands of women, even basic pregnancy care requires traveling far from home.
 
 [@cr-mytext1]{highlight="cr-t1"} Keep scrolling to learn more.
 :::::
