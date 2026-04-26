@@ -251,7 +251,9 @@ m <- leaflet(
     lat = ~Latitude,
     lng = ~Longitude,
     popup = ~paste0(Provider.Name, " is an FPP provider."),
-    clusterOptions = markerClusterOptions(),
+    clusterOptions = markerClusterOptions(
+      iconCreateFunction = JS("function(cluster){ return L.divIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'marker-cluster marker-cluster-fpp', iconSize: new L.Point(40, 40) }); }")
+    ),
     group = "FPP Providers"
   ) |>
   addMarkers(
@@ -259,7 +261,9 @@ m <- leaflet(
     lat = ~Latitude,
     lng = ~Longitude,
     popup = ~paste0(Provider.Name, " is an HTW provider."),
-    clusterOptions = markerClusterOptions(),
+    clusterOptions = markerClusterOptions(
+      iconCreateFunction = JS("function(cluster){ return L.divIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'marker-cluster marker-cluster-htw', iconSize: new L.Point(40, 40) }); }")
+    ),
     group = "HTW Providers"
   ) |>
 
@@ -428,7 +432,7 @@ m
     } else if (step === 3) {
       await clickRadioByLabel(baseLabels[1]);
       showOnlyLegend("Providers");
-      await setOverlays({ fpp: false, htw: true });
+      await setOverlays({ fpp: true, htw: true });
     }
   }
 
