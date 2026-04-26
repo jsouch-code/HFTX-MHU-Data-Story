@@ -13,6 +13,7 @@
   display: grid;
   grid-template-rows: 1fr;
   background-color: var(--cr-section-background-color);
+  color: var(--cr-narrative-text-color-sidebar);
 }
 .cr-section.cr-column-screen {
   grid-column: screen-start/screen-end !important;
@@ -25,11 +26,14 @@
   font-size: var(--cr-narrative-font-size);
 }
 .cr-section .narrative-col .trigger {
-  padding-block: 45svh;
-  padding-inline: 24px;
+  padding-block: clamp(22svh, 34svh, 45svh);
+  padding-inline: clamp(0.875rem, 1.8vw, 1.5rem);
 }
 .cr-section .narrative-col .trigger .narrative {
-  padding: 0.7em 0.75em;
+  padding: 0.8em 0.95em;
+  line-height: 1.55;
+  box-shadow: var(--cr-narrative-shadow);
+  backdrop-filter: blur(2px);
 }
 .cr-section .narrative-col .trigger .narrative > p {
   margin-bottom: 0;
@@ -52,6 +56,8 @@
   grid-area: 1/1;
   margin: auto;
   opacity: 0;
+  width: min(100%, var(--cr-sticky-max-width));
+  max-height: 100%;
   transition: opacity linear 0.5s, color 0.7s linear, transform 1s ease-in-out, transform-origin 1s ease-in-out;
 }
 .cr-section .sticky-col .sticky-col-stack .sticky:has(.line-block) {
@@ -115,7 +121,7 @@
   .cr-section.overlay-center .narrative-col .narrative {
     background-color: var(--cr-narrative-background-color-overlay);
     color: var(--cr-narrative-text-color-overlay);
-    padding: 0.3em 0.5em;
+    padding: 0.6em 0.7em;
     border-radius: var(--cr-narrative-border-radius);
   }
   .cr-section.sidebar-left .sticky-col,
@@ -124,6 +130,20 @@
   .cr-section.overlay-right .sticky-col,
   .cr-section.overlay-center .sticky-col {
     grid-column: 1;
+  }
+
+  .cr-section .narrative-col .trigger {
+    padding-block: clamp(28svh, 36svh, 42svh);
+  }
+
+  .cr-section .sticky-col .sticky-col-stack {
+    height: 100svh;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .cr-section .narrative-col .trigger {
+    padding-block: clamp(30svh, 36svh, 42svh);
   }
 }
 .overlay-left,
@@ -138,7 +158,7 @@
   z-index: 1;
   transition: opacity 0.5s ease-in-out;
   max-width: var(--cr-narrative-overlay-max-width);
-  min-width: var(--cr-narrative-overlay-min-width);
+  min-width: min(var(--cr-narrative-overlay-min-width), 100%);
 }
 .overlay-left .narrative-col .narrative,
 .overlay-center .narrative-col .narrative,
@@ -155,7 +175,7 @@
 
 .overlay-left .narrative-col {
   justify-self: start;
-  margin-left: var(--cr-narrative-outer-margin);
+  margin-left: clamp(0.75rem, 5vw, var(--cr-narrative-outer-margin));
 }
 
 .overlay-center .narrative-col {
@@ -164,11 +184,11 @@
 
 .overlay-right .narrative-col {
   justify-self: end;
-  margin-right: var(--cr-narrative-outer-margin);
+  margin-right: clamp(0.75rem, 5vw, var(--cr-narrative-outer-margin));
 }
 
 .sidebar-left {
-  grid-template-columns: var(--cr-narrative-sidebar-width) 2fr;
+  grid-template-columns: minmax(16rem, var(--cr-narrative-sidebar-width)) minmax(0, 2fr);
 }
 .sidebar-left .narrative-col {
   grid-column: 1;
@@ -184,7 +204,7 @@
 }
 
 .sidebar-right {
-  grid-template-columns: 2fr var(--cr-narrative-sidebar-width);
+  grid-template-columns: minmax(0, 2fr) minmax(16rem, var(--cr-narrative-sidebar-width));
 }
 .sidebar-right .narrative-col {
   grid-column: 2;
@@ -253,23 +273,23 @@ body.cr-removeheaderspace #quarto-content main#quarto-document-content .quarto-t
 
 /* configurable style variables. use bootstrap variables where possible */
 :root {
-  --cr-narrative-background-color-overlay: #708090e1;
+  --cr-narrative-background-color-overlay: rgba(42, 59, 84, 0.88);
   --cr-narrative-text-color-overlay: white;
   --cr-narrative-background-color-sidebar: transparent;
   --cr-narrative-text-color-sidebar: black;
-  --cr-narrative-border-radius: 1em;
-  --cr-narrative-overlay-max-width: 527.98px;
-  --cr-narrative-overlay-min-width: none;
-  --cr-narrative-outer-margin: 5%;
+  --cr-narrative-border-radius: 0.95rem;
+  --cr-narrative-overlay-max-width: min(34rem, calc(100% - 1.5rem));
+  --cr-narrative-overlay-min-width: 16rem;
+  --cr-narrative-outer-margin: 5vw;
   --cr-narrative-font-family: var(--bs-body-font-family);
-  --cr-narrative-font-size: 1.15rem;
+  --cr-narrative-font-size: clamp(1rem, 0.9rem + 0.35vw, 1.15rem);
   --cr-poem-font-family: Rubik;
-  --cr-narrative-sidebar-width: 1fr;
+  --cr-narrative-sidebar-width: clamp(18rem, 30vw, 28rem);
+  --cr-narrative-shadow: 0 8px 24px rgba(16, 24, 40, 0.2);
+  --cr-sticky-max-width: 100%;
   --cr-section-background-color: white;
 }
 
-
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
 
 /* Apply Rubik to the entire document body */
 body {
