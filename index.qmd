@@ -414,22 +414,12 @@ m
 
   async function applyStep(step) {
     // 0: Population, overlays off
-    // 1: Providers per 1,000, overlays off
-    // 2: Providers per 1,000, FPP on
-    // 3: Providers per 1,000, HTW on
+    // 1+: Providers per 1,000, both overlays on
     if (step === 0) {
       await clickRadioByLabel(baseLabels[0]);
       showOnlyLegend("Population");
       await setOverlays({ fpp: false, htw: false });
-    } else if (step === 1) {
-      await clickRadioByLabel(baseLabels[1]);
-      showOnlyLegend("Providers");
-      await setOverlays({ fpp: false, htw: false });
-    } else if (step === 2) {
-      await clickRadioByLabel(baseLabels[1]);
-      showOnlyLegend("Providers");
-      await setOverlays({ fpp: true, htw: false });
-    } else if (step === 3) {
+    } else {
       await clickRadioByLabel(baseLabels[1]);
       showOnlyLegend("Providers");
       await setOverlays({ fpp: true, htw: true });
