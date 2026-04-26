@@ -128,7 +128,12 @@ library(sf)
 library(rmapshaper)
 library(htmlwidgets)
 
-center_lng <- -95.3; center_lat <- 31.0
+texas_bounds <- list(
+  lng1 = -106.70,
+  lat1 = 25.80,
+  lng2 = -93.40,
+  lat2 = 36.70
+)
 
 texas_map <- st_read("GHWMI_PCWT_2023.geojson", quiet=TRUE) |> 
   st_transform(4326) |>
@@ -153,7 +158,7 @@ m <- leaflet(
     zoomDelta = 0.5,
     zoomSnap = 0,
     dragging = FALSE,
-    minZoom = 4.299,
+    minZoom = 4,
     scrollWheelZoom = FALSE
   )
 ) |>
@@ -161,16 +166,17 @@ m <- leaflet(
     "CartoDB.Positron",
     options = providerTileOptions(opacity = 0)
   ) |>
-  setView(
-    lng = center_lng - 3,
-    lat = center_lat,
-    zoom = 6.199
+  fitBounds(
+    lng1 = texas_bounds$lng1,
+    lat1 = texas_bounds$lat1,
+    lng2 = texas_bounds$lng2,
+    lat2 = texas_bounds$lat2
   ) |>
   setMaxBounds(
-    lng1 = -106.6,
-    lat1 = 25.8,
-    lng2 = -93.5,
-    lat2 = 36.5
+    lng1 = texas_bounds$lng1 - 2.5,
+    lat1 = texas_bounds$lat1 - 1.5,
+    lng2 = texas_bounds$lng2 + 2.5,
+    lat2 = texas_bounds$lat2 + 1.5
   ) |>
   mapOptions(zoomToLimits = "always") |>
 
@@ -294,6 +300,32 @@ m <- leaflet(
   className = "legend-perk"
 )|>
   setMapWidgetStyle(list(background = "white")) |>
+  onRender(
+    sprintf(
+      "function(el, x) {
+         var map = this;
+         var bounds = L.latLngBounds(
+           [%f, %f],
+           [%f, %f]
+         );
+         function fitTexas() {
+           var w = window.innerWidth || 0;
+           var h = window.innerHeight || 0;
+           var padX = Math.max(16, Math.round(w * 0.06));
+           var padY = Math.max(16, Math.round(h * 0.06));
+           map.fitBounds(bounds, {
+             paddingTopLeft: [padX, padY],
+             paddingBottomRight: [padX, padY],
+             animate: false
+           });
+         }
+         map.whenReady(fitTexas);
+         window.addEventListener('resize', fitTexas);
+         window.addEventListener('orientationchange', fitTexas);
+       }",
+      texas_bounds$lat1, texas_bounds$lng1, texas_bounds$lat2, texas_bounds$lng2
+    )
+  ) |>
   addResetMapButton() |>
   hideGroup("Total Providers per 1,000 Women 15-49") |>
   hideGroup("FPP Providers") |>
