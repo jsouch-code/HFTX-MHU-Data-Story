@@ -1135,29 +1135,49 @@ df |>
   const youtubeFrame = document.getElementById("ground-video");
   if (!youtubeFrame || !("IntersectionObserver" in window)) return;
 
-  const sendCommand = (func) => {
-    youtubeFrame.contentWindow?.postMessage(
-      JSON.stringify({ event: "command", func, args: [] }),
-      "https://www.youtube.com"
-    );
+  const loadYouTubeApi = () => {
+    if (window.YT && typeof window.YT.Player === "function") {
+      return Promise.resolve(window.YT);
+    }
+
+    return new Promise((resolve) => {
+      const previousCallback = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () {
+        previousCallback?.();
+        resolve(window.YT);
+      };
+
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        const script = document.createElement("script");
+        script.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(script);
+      }
+    });
   };
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          sendCommand("playVideo");
-        } else {
-          sendCommand("pauseVideo");
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
+  loadYouTubeApi().then((YT) => {
+    const player = new YT.Player(youtubeFrame, {
+      events: {
+        onReady: () => {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  player.playVideo();
+                } else {
+                  player.pauseVideo();
+                }
+              });
+            },
+            { threshold: 0.5 }
+          );
 
-  youtubeFrame.addEventListener("load", () => {
-    sendCommand("pauseVideo");
-    observer.observe(youtubeFrame);
+          player.mute();
+          player.pauseVideo();
+          observer.observe(youtubeFrame);
+        }
+      }
+    });
   });
 })();
 </script>
