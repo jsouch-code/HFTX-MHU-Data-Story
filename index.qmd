@@ -690,11 +690,13 @@ js_code <- paste0(
 "  });
 
 ",
+"  var isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
+",
 "  try {
 ",
 "    var all = L.geoJSON(gj);
 ",
-"    map.fitBounds(all.getBounds(), { padding: [20, 20] });
+"    if (!isMobileViewport) map.fitBounds(all.getBounds(), { padding: [20, 20] });
 ",
 "  } catch(e) {}
 
@@ -702,9 +704,7 @@ js_code <- paste0(
 "  var serviceBounds = L.latLngBounds(", service_bounds_js, ");
 ",
 ",
-"  var isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
-",
-"  var servicePadding = isMobileViewport ? [40, 40] : [20, 20];
+"  var servicePadding = isMobileViewport ? [24, 24] : [20, 20];
 ",
 "  var isRefittingServiceArea = false;
 ",
@@ -713,6 +713,16 @@ js_code <- paste0(
 "  var fullServiceZoom = map.getBoundsZoom(serviceBounds, false, servicePadding);
 ",
 "  var followVanWhenZoomed = false;
+",
+"  var baseIconW = ", marker_w, ";
+",
+"  var baseIconH = ", marker_h, ";
+",
+"  var mobileIconScale = isMobileViewport ? Math.max(0.82, Math.min(0.94, window.innerWidth / 460)) : 1;
+",
+"  var iconW = Math.round(baseIconW * mobileIconScale);
+",
+"  var iconH = Math.round(baseIconH * mobileIconScale);
 ",
 "
 ",
@@ -771,17 +781,27 @@ js_code <- paste0(
 ",
 "  if (isMobileViewport) {
 ",
-"    map.on('zoomend', enforceViewportRules);
+"    var mobileCenter = serviceBounds.getCenter();
+",
+"    map.setMaxBounds(serviceBounds.pad(0.02));
+",
+"    map.options.maxBoundsViscosity = 1.0;
+",
+"    map.setMinZoom(fullServiceZoom);
+",
+"    map.setMaxZoom(fullServiceZoom);
+",
+"    map.setView(mobileCenter, fullServiceZoom, { animate: false });
 ",
 "  } else {
 ",
 "    map.on('moveend zoomend', enforceViewportRules);
 ",
+"    map.on('resize', refitServiceArea);
+",
+"    refitServiceArea();
+",
 "  }
-",
-"  map.on('resize', refitServiceArea);
-",
-"  refitServiceArea();
 ",
 "
 ",
@@ -832,9 +852,9 @@ js_code <- paste0(
 ",
 "    iconUrl: '", marker_png_safe, "',
 ",
-"    iconSize: [", marker_w, ", ", marker_h, "],
+"    iconSize: [iconW, iconH],
 ",
-"    iconAnchor: [", round(marker_w/2), ", ", marker_h, "]
+"    iconAnchor: [Math.round(iconW/2), iconH]
 ",
 "  });
 ",
@@ -1018,9 +1038,9 @@ js_code <- paste0(
 ",
 "      tracer.bindPopup(buildTracerTooltip(feature, gradientState.baseDistanceDriven), {
 ",
-"        closeButton: true, autoClose: false, closeOnClick: false,
+"        closeButton: true, autoClose: false, closeOnClick: false, autoPan: false,
 ",
-"        offset: [0, -", marker_h, "]
+"        offset: [0, -iconH]
 ",
 "      });
 ",
