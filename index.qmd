@@ -708,6 +708,8 @@ js_code <- paste0(
 ",
 "  var isRefittingServiceArea = false;
 ",
+"  var lastServiceRefitAt = 0;
+",
 "  var fullServiceZoom = map.getBoundsZoom(serviceBounds, false, servicePadding);
 ",
 "  var followVanWhenZoomed = false;
@@ -715,6 +717,12 @@ js_code <- paste0(
 "
 ",
 "  function refitServiceArea() {
+",
+"    var now = Date.now();
+",
+"    if (now - lastServiceRefitAt < 250) return;
+",
+"    lastServiceRefitAt = now;
 ",
 "    isRefittingServiceArea = true;
 ",
@@ -734,7 +742,15 @@ js_code <- paste0(
 ",
 "  function shouldFollowVan() {
 ",
+"    if (isMobileViewport) return false;
+",
 "    return tracer && map.getZoom() > (fullServiceZoom + 0.5) && isVanVisible();
+",
+"  }
+",
+"  function isServiceAreaInView() {
+",
+"    return map.getBounds().pad(0.02).contains(serviceBounds);
 ",
 "  }
 ",
@@ -744,7 +760,7 @@ js_code <- paste0(
 ",
 "    followVanWhenZoomed = shouldFollowVan();
 ",
-"    if (!followVanWhenZoomed && !map.getBounds().contains(serviceBounds)) {
+"    if (!followVanWhenZoomed && !isServiceAreaInView()) {
 ",
 "      refitServiceArea();
 ",
@@ -752,7 +768,18 @@ js_code <- paste0(
 ",
 "  }
 ",
-"  map.on('moveend zoomend', enforceViewportRules);
+",
+"  if (isMobileViewport) {
+",
+"    map.on('zoomend', enforceViewportRules);
+",
+"  } else {
+",
+"    map.on('moveend zoomend', enforceViewportRules);
+",
+"  }
+",
+"  map.on('resize', refitServiceArea);
 ",
 "  refitServiceArea();
 ",
