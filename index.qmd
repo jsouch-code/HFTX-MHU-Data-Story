@@ -544,7 +544,7 @@ This map illustrates how mobile units move across regions with limited or no per
 You can scroll around and zoom in and out.
 ```{=html}
 <span class="cr-map2-mobile-values">
-South Texas Family Planning &amp; Health Corporation (STFPHC) mobile unit has driven 3,243.8 miles so far, out of 3,243.8 total planned miles.
+South Texas Family Planning &amp; Health Corporation (STFPHC) mobile unit has driven -- miles so far, out of -- total planned miles.
 </span>
 <style>
   .cr-map2-mobile-values { display: none; }
@@ -962,7 +962,13 @@ js_code <- paste0(
 ",
 "  function setMobileNarrative(distanceDriven) {
 ",
-"    return;
+"    if (!isMobileViewport) return;
+",
+"    var mobileNarrativeEl = document.querySelector('.cr-map2-mobile-values');
+",
+"    if (!mobileNarrativeEl) return;
+",
+"    mobileNarrativeEl.innerHTML = buildMobileNarrative(distanceDriven);
 ",
 "  }
 
