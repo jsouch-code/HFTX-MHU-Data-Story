@@ -780,9 +780,13 @@ js_code <- paste0(
 ",
 "  if (isMobileViewport) {
 ",
-"    map.on('resize', refitServiceArea);
-",
 "    refitServiceArea();
+",
+"    window.addEventListener('orientationchange', function() {
+",
+"      setTimeout(refitServiceArea, 150);
+",
+"    });
 ",
 "  } else {
 ",
