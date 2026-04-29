@@ -721,8 +721,7 @@ js_code <- paste0(
 ",
 "  var fullServiceZoom = map.getBoundsZoom(serviceBounds, false, servicePadding);
 ",
-"  var followVanWhenZoomed = false;
-",
+"",
 "  var baseIconW = ", marker_w, ";
 ",
 "  var baseIconH = ", marker_h, ";
@@ -751,17 +750,11 @@ js_code <- paste0(
 ",
 "  }
 ",
-"  function isVanVisible() {
+"  function keepTracerCentered() {
 ",
-"    if (!tracer) return false;
+"    if (!tracer) return;
 ",
-"    return map.getBounds().contains(tracer.getLatLng());
-",
-"  }
-",
-"  function shouldFollowVan() {
-",
-"    return tracer && map.getZoom() > (fullServiceZoom + 0.5) && isVanVisible();
+"    map.panTo(tracer.getLatLng(), { animate: false });
 ",
 "  }
 ",
@@ -775,9 +768,7 @@ js_code <- paste0(
 ",
 "    if (isRefittingServiceArea) return;
 ",
-"    followVanWhenZoomed = shouldFollowVan();
-",
-"    if (!followVanWhenZoomed && !isServiceAreaInView()) {
+"    if (!tracer && !isServiceAreaInView()) {
 ",
 "      refitServiceArea();
 ",
@@ -791,15 +782,13 @@ js_code <- paste0(
 ",
 "    map.fitBounds(serviceBounds, { padding: servicePadding, animate: false });
 ",
-"    var syncMobileFollowState = function() { followVanWhenZoomed = shouldFollowVan(); };
-",
-"    map.on('zoomend moveend', syncMobileFollowState);
-",
-"    syncMobileFollowState();
+"    map.on('zoomend moveend', keepTracerCentered);
 ",
 "  } else {
 ",
 "    map.on('moveend zoomend', enforceViewportRules);
+",
+"    map.on('moveend zoomend', keepTracerCentered);
 ",
 "    map.on('resize', refitServiceArea);
 ",
@@ -1080,11 +1069,7 @@ js_code <- paste0(
 ",
 "      tracer.setLatLng([b[1], b[0]]);
 ",
-"      if (followVanWhenZoomed) {
-",
-"        map.panTo([b[1], b[0]], { animate: false });
-",
-"      }
+"      map.panTo([b[1], b[0]], { animate: false });
 ",
 "      setTracerRotation(tracer, bearingDeg(a, b));
 ",
