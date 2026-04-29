@@ -542,6 +542,20 @@ Keep scrolling. [@cr-mytext0]{hlz="cr-t1,cr-t2"}
 This map illustrates how mobile units move across regions with limited or no permanent healthcare infrastructures, reaching women who would otherwise face transportation barriers, or even no access at all.
 
 You can scroll around and zoom in and out.
+```{=html}
+<span class="cr-map2-mobile-values">
+South Texas Family Planning &amp; Health Corporation (STFPHC) mobile unit has driven 3,243.8 miles so far, out of 3,243.8 total planned miles.
+</span>
+<style>
+  .cr-map2-mobile-values { display: none; }
+  @media (max-width: 768px) {
+    .cr-map2-mobile-values {
+      display: block;
+      margin-top: 0.5rem;
+    }
+  }
+</style>
+```
 
 By 2026, South Texas Family Planning & Health Corporation (STFPHC) had grown to operate a second mobile unit and was approved to serve 29 counties—demonstrating both the success of mobile health services and the increasing demand for accessible care.
 
@@ -948,11 +962,7 @@ js_code <- paste0(
 ",
 "  function setMobileNarrative(distanceDriven) {
 ",
-"    if (!isMobileViewport) return;
-",
-"    ensureMobileNarrativeOverlay();
-",
-"    if (mobileNarrativeOverlay) mobileNarrativeOverlay.innerHTML = buildMobileNarrative(distanceDriven);
+"    return;
 ",
 "  }
 
