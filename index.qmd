@@ -780,13 +780,7 @@ js_code <- paste0(
 ",
 "  if (isMobileViewport) {
 ",
-"    refitServiceArea();
-",
-"    window.addEventListener('orientationchange', function() {
-",
-"      setTimeout(refitServiceArea, 150);
-",
-"    });
+"    // On mobile, do not enforce service-area-in-view to avoid viewport shake.
 ",
 "  } else {
 ",
