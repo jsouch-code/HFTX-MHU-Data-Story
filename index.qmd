@@ -790,7 +790,12 @@ js_code <- paste0(
 ",
 "  if (isMobileViewport) {
 ",
-"    // On mobile, do not enforce service-area-in-view to avoid viewport shake.
+",
+"    var mobileCenter = serviceBounds.getCenter();
+",
+"    var mobileStartZoom = fullServiceZoom + 1;
+",
+"    map.setView(mobileCenter, mobileStartZoom, { animate: false });
 ",
 "  } else {
 ",
