@@ -691,6 +691,16 @@ js_code <- paste0(
 ",
 "  var isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
 ",
+"  if (isMobileViewport) {
+",
+"    // Lock map height to initial viewport pixels on phones to avoid URL-bar resize jitter.
+",
+"    el.style.height = window.innerHeight + 'px';
+",
+"    map.invalidateSize(false);
+",
+"  }
+",
 "  try {
 ",
 "    var all = L.geoJSON(gj);
