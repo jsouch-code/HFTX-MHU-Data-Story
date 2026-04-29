@@ -761,8 +761,6 @@ js_code <- paste0(
 ",
 "  function shouldFollowVan() {
 ",
-"    if (isMobileViewport) return false;
-",
 "    return tracer && map.getZoom() > (fullServiceZoom + 0.5) && isVanVisible();
 ",
 "  }
@@ -791,11 +789,13 @@ js_code <- paste0(
 "  if (isMobileViewport) {
 ",
 ",
-"    var mobileCenter = serviceBounds.getCenter();
+"    map.fitBounds(serviceBounds, { padding: servicePadding, animate: false });
 ",
-"    var mobileStartZoom = fullServiceZoom + 1;
+"    var syncMobileFollowState = function() { followVanWhenZoomed = shouldFollowVan(); };
 ",
-"    map.setView(mobileCenter, mobileStartZoom, { animate: false });
+"    map.on('zoomend moveend', syncMobileFollowState);
+",
+"    syncMobileFollowState();
 ",
 "  } else {
 ",
