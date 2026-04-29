@@ -526,7 +526,6 @@ Keep scrolling. @cr-mytext0
 
 | {#cr-mytext0 .cr-text .scale-to-fill}
 | **Voices of Patients:**
-| 
 | “I got scared after my neighbor died of breast cancer. She came to me one day and showed me her left breast. I told her she needed to go to a doctor, but it was too late. She suffered for a year and died of breast cancer, because she [couldn’t find the right medical services]{#cr-t1}. I then decided I needed to find a way to live for my family.When I discovered your clinic and I learned about the services you all provide, [I found hope again]{#cr-t2}. I feel that my health is important to my family, because without me, I don’t know how they would be able to take care of themselves.”
 
                             
