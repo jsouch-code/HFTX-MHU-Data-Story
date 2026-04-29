@@ -70,15 +70,8 @@ That’s where mobile health care units come in. @cr-myimage1
 Learn more. @cr-mytext1
 
 | {#cr-mytext1 .cr-text .scale-to-fill}
-| The impact on women’s health has been
-| especially severe. Nearly half of
-| Texas counties (46.5%) are classified as
-| [maternity care deserts]{#cr-t1},
-| meaning they lack access to birthing facilities
-| or maternity care providers altogether.
-| For thousands of women, even basic
-| pregnancy care requires
-| traveling far from home.
+| The impact on women’s health has been especially severe. Nearly half of Texas counties (46.5%) are classified as [maternity care deserts]{#cr-t1}, meaning they lack access to birthing facilities or maternity care providers altogether. For thousands of women, even basic pregnancy care requires traveling far from home.
+
 
 [@cr-mytext1]{highlight="cr-t1"} Keep scrolling to learn more.
 :::::
@@ -87,14 +80,8 @@ Learn more. @cr-mytext1
 ::: {.cr-section .quote-section  .hide-narrative layout="overlay-center"}
 Learn more. @cr-mytext2
 
-| {#cr-mytext2 .cr-text .scale-to-fill} Barriers to care extend beyond pregnancy.
-| Across Texas, [1.75 million women]{#cr-t5} in need live in contraceptive deserts,
-| where access to affordable birth control is limited or nonexistent.
-| In Texas, [153,040 women]{#cr-t6} live in counties without a
-| single health center offering a full range of birth control methods.
-| Together, these gaps in maternal and women’s healthcare make timely, 
-| comprehensive care out of reach for many, underscoring the urgent 
-| need for solutions that meet people where they are. 
+| {#cr-mytext2 .cr-text .scale-to-fill}
+| Barriers to care extend beyond pregnancy. Across Texas, [1.75 million women]{#cr-t5} in need live in contraceptive deserts, where access to affordable birth control is limited or nonexistent. In Texas, [153,040 women]{#cr-t6} live in counties without a single health center offering a full range of birth control methods. Together, these gaps in maternal and women’s healthcare make timely,  comprehensive care out of reach for many, underscoring the urgent need for solutions that meet people where they are. 
 
 
 [@cr-mytext2]{highlight="cr-t5,cr-t6"} Keep scrolling. 
@@ -540,7 +527,6 @@ Keep scrolling. @cr-mytext0
 
 | {#cr-mytext0 .cr-text .scale-to-fill}
 | **Voices of Patients:**
-| 
 | “I got scared after my neighbor died of breast cancer. She came to me one day and showed me her left breast. I told her she needed to go to a doctor, but it was too late. She suffered for a year and died of breast cancer, because she [couldn’t find the right medical services]{#cr-t1}. I then decided I needed to find a way to live for my family.When I discovered your clinic and I learned about the services you all provide, [I found hope again]{#cr-t2}. I feel that my health is important to my family, because without me, I don’t know how they would be able to take care of themselves.”
 
                             
