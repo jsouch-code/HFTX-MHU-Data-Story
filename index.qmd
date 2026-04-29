@@ -717,7 +717,7 @@ js_code <- paste0(
 ",
 "  var baseIconH = ", marker_h, ";
 ",
-"  var mobileIconScale = isMobileViewport ? Math.max(0.82, Math.min(0.94, window.innerWidth / 460)) : 1;
+"  var mobileIconScale = isMobileViewport ? Math.max(0.60, Math.min(0.78, window.innerWidth / 460)) : 1;
 ",
 "  var iconW = Math.round(baseIconW * mobileIconScale);
 ",
@@ -780,17 +780,9 @@ js_code <- paste0(
 ",
 "  if (isMobileViewport) {
 ",
-"    var mobileCenter = serviceBounds.getCenter();
+"    map.on('resize', refitServiceArea);
 ",
-"    map.setMaxBounds(serviceBounds.pad(0.02));
-",
-"    map.options.maxBoundsViscosity = 1.0;
-",
-"    map.setMinZoom(fullServiceZoom);
-",
-"    map.setMaxZoom(fullServiceZoom);
-",
-"    map.setView(mobileCenter, fullServiceZoom, { animate: false });
+"    refitServiceArea();
 ",
 "  } else {
 ",
