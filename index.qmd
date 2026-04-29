@@ -746,8 +746,7 @@ js_code <- paste0(
 ",
 "  var iconH = Math.round(baseIconH * mobileIconScale);
 ",
-"
-",
+"  \n",
 "  function refitServiceArea() {
 ",
 "    var now = Date.now();
@@ -810,8 +809,7 @@ js_code <- paste0(
 ",
 "  }
 ",
-"
-",
+"  \n",
 "  var pointsPerPart = 200;
 ",
 "  var partMs = 100;
