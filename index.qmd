@@ -897,6 +897,64 @@ js_code <- paste0(
 "    ].join('<br>');
 ",
 "  }
+",
+"  function buildMobileNarrative(distanceDriven) {
+",
+"    return 'STFPHC mobile unit has driven <strong>' + formatNumber(distanceDriven*0.62, 1) + ' miles</strong> so far, out of <strong>' + formatNumber(totalPlannedDistance*0.62, 1) + ' total planned miles</strong>.';
+",
+"  }
+",
+"  var mobileNarrativeOverlay = null;
+",
+"  function ensureMobileNarrativeOverlay() {
+",
+"    if (!isMobileViewport || mobileNarrativeOverlay) return;
+",
+"    mobileNarrativeOverlay = document.createElement('div');
+",
+"    mobileNarrativeOverlay.style.position = 'absolute';
+",
+"    mobileNarrativeOverlay.style.left = '12px';
+",
+"    mobileNarrativeOverlay.style.right = '12px';
+",
+"    mobileNarrativeOverlay.style.bottom = '12px';
+",
+"    mobileNarrativeOverlay.style.zIndex = '900';
+",
+"    mobileNarrativeOverlay.style.background = 'rgba(255, 255, 255, 0.96)';
+",
+"    mobileNarrativeOverlay.style.border = '1px solid rgba(83, 40, 79, 0.25)';
+",
+"    mobileNarrativeOverlay.style.borderRadius = '10px';
+",
+"    mobileNarrativeOverlay.style.boxShadow = '0 6px 18px rgba(0,0,0,0.14)';
+",
+"    mobileNarrativeOverlay.style.padding = '10px 12px';
+",
+"    mobileNarrativeOverlay.style.fontSize = '13px';
+",
+"    mobileNarrativeOverlay.style.lineHeight = '1.35';
+",
+"    mobileNarrativeOverlay.style.color = '#2f2a2f';
+",
+"    mobileNarrativeOverlay.style.pointerEvents = 'none';
+",
+"    el.style.position = 'relative';
+",
+"    el.appendChild(mobileNarrativeOverlay);
+",
+"  }
+",
+"  function setMobileNarrative(distanceDriven) {
+",
+"    if (!isMobileViewport) return;
+",
+"    ensureMobileNarrativeOverlay();
+",
+"    if (mobileNarrativeOverlay) mobileNarrativeOverlay.innerHTML = buildMobileNarrative(distanceDriven);
+",
+"  }
 
 ",
 "  function bearingDeg(a, b) {
@@ -1029,7 +1087,8 @@ js_code <- paste0(
 ",
 "      tracer = L.marker([pts[0][1], pts[0][0]], { icon: markerIcon }).addTo(map);
 ",
-"      tracer.bindPopup(buildTracerTooltip(feature, gradientState.baseDistanceDriven), {
+",
+"      if (!isMobileViewport) tracer.bindPopup(buildTracerTooltip(feature, gradientState.baseDistanceDriven), {
 ",
 "        closeButton: true, autoClose: false, closeOnClick: false, autoPan: false,
 ",
@@ -1037,13 +1096,19 @@ js_code <- paste0(
 ",
 "      });
 ",
-"      tracer.openPopup();
+",
+"      if (!isMobileViewport) tracer.openPopup();
+",
+"      setMobileNarrative(gradientState.baseDistanceDriven);
 ",
 "    } else {
 ",
 "      tracer.setLatLng([pts[0][1], pts[0][0]]);
 ",
-"      tracer.setPopupContent(buildTracerTooltip(feature, gradientState.baseDistanceDriven));
+",
+"      if (!isMobileViewport) tracer.setPopupContent(buildTracerTooltip(feature, gradientState.baseDistanceDriven));
+",
+"      setMobileNarrative(gradientState.baseDistanceDriven);
 ",
 "    }
 ",
@@ -1079,7 +1144,10 @@ js_code <- paste0(
 ",
 "      var distanceDriven = gradientState.baseDistanceDriven + (gradientState.featureDistance * progress);
 ",
-"      tracer.setPopupContent(buildTracerTooltip(feature, distanceDriven));
+",
+"      if (!isMobileViewport) tracer.setPopupContent(buildTracerTooltip(feature, distanceDriven));
+",
+"      setMobileNarrative(distanceDriven);
 ",
 "      idx++;
 ",
