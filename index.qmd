@@ -6,9 +6,11 @@ format: closeread-html
 
 ## Mobile women's health clinics in texas.
 
+[View references](references.html).
+
 ### What is the need?
 
-Across the [268,597 square miles of Texas]{.key-number}, access to women’s healthcare is deeply uneven. Large regions of the state function as “healthcare deserts,” where high- population communities have limited or sometimes no access to nearby clinics providing essential services like contraception, cancer screenings, and preventive care. Many rural Texans face long travel distances, limited transportation options, and months-long wait times.
+Across the [268,597 square miles of Texas]{.key-number}, access to women’s healthcare is deeply uneven.<sup><a href="references.html#ref-texas-area">1</a></sup> Large regions of the state function as “healthcare deserts,” where high- population communities have limited or sometimes no access to nearby clinics providing essential services like contraception, cancer screenings, and preventive care. Many rural Texans face long travel distances, limited transportation options, and months-long wait times.
 
 ::: {.cr-section .emphasis-section layout="overlay-center"}
 ::: progress-block
@@ -70,7 +72,7 @@ That’s where mobile health care units come in. @cr-myimage1
 Learn more. @cr-mytext1
 
 | {#cr-mytext1 .cr-text .scale-to-fill}
-| The impact on women’s health has been especially severe. Nearly half of Texas counties (46.5%) are classified as [maternity care deserts]{#cr-t1}, meaning they lack access to birthing facilities or maternity care providers altogether. For thousands of women, even basic pregnancy care requires traveling far from home.
+| The impact on women’s health has been especially severe. Nearly half of Texas counties (46.5%) are classified as [maternity care deserts]{#cr-t1}, meaning they lack access to birthing facilities or maternity care providers altogether.<sup><a href="references.html#ref-maternity-deserts">2</a></sup> For thousands of women, even basic pregnancy care requires traveling far from home.
 
 
 [@cr-mytext1]{highlight="cr-t1"} Keep scrolling to learn more.
@@ -81,7 +83,7 @@ Learn more. @cr-mytext1
 Learn more. @cr-mytext2
 
 | {#cr-mytext2 .cr-text .scale-to-fill}
-| Barriers to care extend beyond pregnancy. Across Texas, [1.75 million women]{#cr-t5} in need live in contraceptive deserts, where access to affordable birth control is limited or nonexistent. In Texas, [153,040 women]{#cr-t6} live in counties without a single health center offering a full range of birth control methods. Together, these gaps in maternal and women’s healthcare make timely,  comprehensive care out of reach for many.
+| Barriers to care extend beyond pregnancy. Across Texas, [1.75 million women]{#cr-t5} in need live in contraceptive deserts, where access to affordable birth control is limited or nonexistent.<sup><a href="references.html#ref-contraceptive-deserts">3</a></sup> In Texas, [153,040 women]{#cr-t6} live in counties without a single health center offering a full range of birth control methods.<sup><a href="references.html#ref-no-health-center">4</a></sup> Together, these gaps in maternal and women’s healthcare make timely,  comprehensive care out of reach for many.
 
 
 [@cr-mytext2]{highlight="cr-t5,cr-t6"} Keep scrolling. 
@@ -540,11 +542,11 @@ Keep scrolling. [@cr-mytext0]{hlz="cr-t1,cr-t2"}
 :::: {.cr-section layout="overlay-right"}
 @cr-map2 A single mobile health unit can extend care across multiple counties that aren’t served by brick-and-mortar clinics. 
 
-This map shows the route for the mobile clinic operated by the South Texas Family Planning & Health Corporation (STFPHC). Their mobile clinic traveled to 196 locations across 18 counties in 2025, reaching many communities with no other health care access.
+This map shows the route for the mobile clinic operated by the South Texas Family Planning & Health Corporation (STFPHC). Their mobile clinic traveled to 196 locations across 18 counties in 2025, reaching many communities with no other health care access.<sup><a href="references.html#ref-stfphc-route">5</a></sup>
 
 You can scroll around and zoom in and out.
 
-By 2026, STFPHC had grown to operate a second mobile unit and was approved to serve 29 counties—demonstrating both the success of mobile health services and the increasing demand for accessible care.
+By 2026, STFPHC had grown to operate a second mobile unit and was approved to serve 29 counties—demonstrating both the success of mobile health services and the increasing demand for accessible care.<sup><a href="references.html#ref-stfphc-expansion">6</a></sup>
 
 
 ::: {#cr-map2}

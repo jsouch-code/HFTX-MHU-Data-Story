@@ -1,3 +1,11 @@
 project:
   type: website
   output-dir: docs
+
+website:
+  navbar:
+    left:
+      - text: "Data Story"
+        href: index.qmd
+      - text: "References"
+        href: references.qmd

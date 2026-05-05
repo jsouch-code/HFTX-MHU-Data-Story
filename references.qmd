@@ -1,0 +1,20 @@
+---
+title: "References"
+format: closeread-html
+---
+
+# References
+
+This page is linked from superscripts throughout the data story. You can add new references by creating a new list item with a unique anchor `{: #ref-your-id }`, then link to it from the narrative with:
+
+`<sup><a href="references.html#ref-your-id">n</a></sup>`
+
+## Source list
+
+1. Texas state area (268,597 square miles). Texas Almanac / State of Texas reference. {: #ref-texas-area }
+2. Maternity care deserts in Texas (46.5% of counties). March of Dimes / maternal care access reporting. {: #ref-maternity-deserts }
+3. Women in contraceptive deserts in Texas (1.75 million). Policy and reproductive health access analysis source. {: #ref-contraceptive-deserts }
+4. Women in counties without a full-range birth control center (153,040). Family planning access source dataset. {: #ref-no-health-center }
+5. STFPHC 2025 route summary (196 locations, 18 counties). STFPHC operational reporting. {: #ref-stfphc-route }
+6. STFPHC 2026 expansion to 29 counties and second mobile unit. STFPHC program update. {: #ref-stfphc-expansion }
+
