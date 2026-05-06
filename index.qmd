@@ -1,5 +1,12 @@
 ---
-format: closeread-html
+format:
+  closeread-html:
+    citations-hover: true
+    footnotes-hover: true
+bibliography: references.bib
+csl: american-medical-association.csl
+link-citations: true
+# Optional: for formatting
 ---
 
 # The geography of healthcare.
@@ -8,7 +15,9 @@ format: closeread-html
 
 ### What is the need?
 
-Across the [268,597 square miles of Texas]{.key-number}, access to women’s healthcare is deeply uneven. Large regions of the state function as “healthcare deserts,” where high- population communities have limited or sometimes no access to nearby clinics providing essential services like contraception, cancer screenings, and preventive care. Many rural Texans face long travel distances, limited transportation options, and months-long wait times.
+Across the [268,597 square miles of Texas]{.key-number}, access to women’s healthcare is deeply uneven. Large regions of the state function as “healthcare deserts,” where high- population communities have limited or sometimes no access to nearby clinics providing essential services like contraception, cancer screenings, and preventive care. Many rural Texans face long travel distances, limited transportation options, and months-long wait times.[@power_to_decide_deserts] 
+
+
 
 ::: {.cr-section .emphasis-section layout="overlay-center"}
 ::: progress-block
@@ -70,7 +79,7 @@ That’s where mobile health care units come in. @cr-myimage1
 Learn more. @cr-mytext1
 
 | {#cr-mytext1 .cr-text .scale-to-fill}
-| The impact on women’s health has been especially severe. Nearly half of Texas counties (46.5%) are classified as [maternity care deserts]{#cr-t1}, meaning they lack access to birthing facilities or maternity care providers altogether. For thousands of women, even basic pregnancy care requires traveling far from home.
+| The impact on women’s health has been especially severe. Nearly half of Texas counties (46.5%) are classified as [maternity care deserts]{#cr-t1}, meaning they lack access to birthing facilities or maternity care providers altogether. [@power_to_decide_deserts] For thousands of women, even basic pregnancy care requires traveling far from home.
 
 
 [@cr-mytext1]{highlight="cr-t1"} Keep scrolling to learn more.
@@ -81,7 +90,7 @@ Learn more. @cr-mytext1
 Learn more. @cr-mytext2
 
 | {#cr-mytext2 .cr-text .scale-to-fill}
-| Barriers to care extend beyond pregnancy. Across Texas, [1.75 million women]{#cr-t5} in need live in contraceptive deserts, where access to affordable birth control is limited or nonexistent. In Texas, [153,040 women]{#cr-t6} live in counties without a single health center offering a full range of birth control methods. Together, these gaps in maternal and women’s healthcare make timely,  comprehensive care out of reach for many.
+| Barriers to care extend beyond pregnancy. Across Texas, [1.75 million women]{#cr-t5} in need live in contraceptive deserts, where access to affordable birth control is limited or nonexistent. In Texas, [153,040 women]{#cr-t6} live in counties without a single health center offering a full range of birth control methods.[@power_to_decide_deserts] Together, these gaps in maternal and women’s healthcare make timely,  comprehensive care out of reach for many.
 
 
 [@cr-mytext2]{highlight="cr-t5,cr-t6"} Keep scrolling. 
@@ -91,10 +100,10 @@ Learn more. @cr-mytext2
 
 :::: {.cr-section layout="overlay-center"}
 **Population**\
-This map shows the population of women of reproductive age (15-49) in 2023. @cr-map
+This map shows the population of women of reproductive age (15-49) in 2023.[@esri_fertility_2025] @cr-map
 
 **Providers per 1,000**\
-This map shows the ratio of providers – such as doctors, nurses practitioners, or physician assistants – with at least 10 new birth control prescriptions per 1,000 women of reproductive age in 2023. 
+This map shows the ratio of providers – such as doctors, nurses practitioners, or physician assistants – with at least 10 new birth control prescriptions per 1,000 women of reproductive age in 2023. [@gwhwi_contraception_2022]
 
 
 **The Family Planning Program** is a General Revenue-funded, limited-benefit program that serves uninsured men and women across Texas.  
@@ -1266,3 +1275,67 @@ This investment represents [\$10 million more]{.key-number1} than the amount sec
 :::
 
 :::
+
+
+## Methodology
+
+::: {.callout-note collapse="true"}
+### Data Notes
+
+**Summary**
+
+The Mobile Health Unit Data Story Tool was developed by the research department of Healthy Futures of Texas for the Texas Women’s Healthcare Coalition. The application was built using RStudio (version 2026.01.0+392) and Quarto (version 1.8.25), with the Closeread extension used to structure the narrative interface. Narrative elements were rendered in HTML, and interactive features were implemented using JavaScript [@ecmascript_2024].
+
+**Data Sources**
+
+ACS Fertility Centroids/Boundaries[@esri_fertility_2025]
+
+Source: Esri Demographics Team Data as of: April 9, 2025 This dataset contains the most recent American Community Survey (ACS) 5-year estimates on fertility in the past 12 months by age of mother. Data are available at tract, county, and state geographic levels.
+
+***Prescription Contraception Workforce***[@gwhwi_contraception_2022]
+
+Source: Fitzhugh Mullan Institute for Health Workforce Equity, George Washington University (2022) Available at: https://www.gwhwi.org/reproductivehealth.html
+
+This dataset tracks the location, specialty, and distribution of the prescription contraception workforce. It is based on IQVIA prescription claims identifying providers with at least 10 new prescriptions for contraceptive pills, patches, or rings. The data cover approximately 92–94% of U.S. retail prescription claims from 2019–2023.
+
+***FPP and HTW Provider Locations***[@hhsc_whp_2025]
+
+Source: Texas Health and Human Services Commission (2025), Women’s Health Programs Savings and Performance Report for Fiscal Year 2024
+
+This dataset includes enrollment, utilization, and provider-level metrics for the Healthy Texas Women (HTW) and Family Planning Program (FPP). It provides information on patient counts, geographic distribution, contraceptive use (including LARC), and service utilization by procedure code. Supporting documentation details methods for calculating client counts, expenditures, and demographic characteristics.
+
+***Mobile Health Unit (MHU) Client Data***[@mobile_stops_2025]
+
+Data as of: December 31, 2025
+
+This dataset summarizes 2025 Q1–Q4 mobile health unit visits by county across multiple providers, including Special Health Resources for Texas, Inc.; South Texas Family Planning & Health Corp.; Parkland Health; Gateway Community Health Center; Baylor Scott & White Research Institute; and Barrio Comprehensive Family Health Care. Data were provided directly by participating clinics.
+
+***Mobile Stops Audit – South Texas Family Planning***[@mobile_stops_2025]
+
+Data as of: December 31, 2025
+
+This dataset documents all mobile unit stops conducted by South Texas Family Planning & Health Corp. during 2025.
+
+***TIGER/Line Shapefile (Primary and Secondary Roads)***[@tiger_roads_2019]
+
+Source: U.S. Census Bureau (2019)
+
+This shapefile includes primary and secondary road networks for Texas derived from the TIGER/Line database. The dataset is part of the Census Bureau’s Master Address File/Topologically Integrated Geographic Encoding and Referencing (MAF/TIGER) system, which provides a seamless national geographic framework.
+
+**Geocoding**
+
+All coordinates were generated using the Geocode extension in Google Sheets (Awesome Table).
+
+**Media**
+
+Video and image credits: Healthy Futures of Texas
+:::
+
+
+
+:::: {.callout-note collapse="true"}
+### References
+
+::: {#refs}
+:::
+::::
