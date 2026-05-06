@@ -1069,7 +1069,7 @@ m
 Learn more. @cr-mytext8
 
 | {#cr-mytext8 .cr-text .scale-to-fill}
-| In 2025, there were served [2,576 patients]{#cr-t8} [@mobile_clientsserved_2025 across [15,000 square miles]{#cr-t9} of Texas using its mobile unit.^[Area represents the combined land area of the 18 counties served by the mobile unit in 2025 and is intended to approximate the geographic service area.]
+| In 2025, there were served [2,576 patients]{#cr-t8} [@mobile_clientsserved_2025] across [15,000 square miles]{#cr-t9} of Texas using its mobile unit.^[Area represents the combined land area of the 18 counties served by the mobile unit in 2025 and is intended to approximate the geographic service area.]
 [@cr-mytext8]{highlight="cr-t8,cr-t9"} Keep scrolling.
 :::
 
