@@ -106,7 +106,7 @@ This map shows the population of women of reproductive age (15-49) in 2023.[@esr
 This map shows the ratio of providers – such as doctors, nurses practitioners, or physician assistants – with at least 10 new birth control prescriptions per 1,000 women of reproductive age in 2023. [@gwhwi_contraception_2022]
 
 
-**The Family Planning Program** is a General Revenue-funded, limited-benefit program that serves uninsured men and women across Texas.  
+**The Family Planning Program** is a General Revenue-funded, limited-benefit program that serves uninsured men and women across Texas.[@hhsc_whp_2025]  
 Services covered include:  
 • Birth control  
 • Cancer screenings  
@@ -115,7 +115,7 @@ Services covered include:
 
 
 
-**Healthy Texas Women (HTW)** is a Medicaid waiver, limited-benefit program that provides healthcare and family planning services to women aged 15-44 with low income and no insurance.  
+**Healthy Texas Women (HTW)** is a Medicaid waiver, limited-benefit program that provides healthcare and family planning services to women aged 15-44 with low income and no insurance. [@hhsc_whp_2025]  
 Services covered include:  
 • Birth control  
 • Cancer screenings  
@@ -549,11 +549,11 @@ Keep scrolling. [@cr-mytext0]{hlz="cr-t1,cr-t2"}
 :::: {.cr-section layout="overlay-right"}
 @cr-map2 A single mobile health unit can extend care across multiple counties that aren’t served by brick-and-mortar clinics. 
 
-This map shows the route for the mobile clinic operated by the South Texas Family Planning & Health Corporation (STFPHC). Their mobile clinic traveled to 196 locations across 18 counties in 2025, reaching many communities with no other health care access.
+This map shows the route^[Distance estimates are approximate and were calculated using routes from ZIP code centroids rather than exact service locations; as a result, distances may not reflect true travel paths or starting points.] for the mobile clinic operated by the South Texas Family Planning & Health Corporation (STFPHC). Their mobile clinic traveled to 196 locations across 18 counties in 2025, reaching many communities with no other health care access.
 
 You can scroll around and zoom in and out.
 
-By 2026, STFPHC had grown to operate a second mobile unit and was approved to serve 29 counties—demonstrating both the success of mobile health services and the increasing demand for accessible care.
+By 2026, STFPHC had grown to operate a second mobile unit and was approved to serve 29 counties—demonstrating both the success of mobile health services and the increasing demand for accessible care.[@mobile_stops_2025]
 
 
 ::: {#cr-map2}
@@ -1069,8 +1069,7 @@ m
 Learn more. @cr-mytext8
 
 | {#cr-mytext8 .cr-text .scale-to-fill}
-| In 2025, there were served [2,576 patients]{#cr-t8} across [15,000 square miles]{#cr-t9} of Texas using its mobile unit.
-
+| In 2025, there were served [2,576 patients]{#cr-t8} across [15,000 square miles]{#cr-t9} of Texas using its mobile unit.^[Area represents the combined land area of the 18 counties served by the mobile unit in 2025 and is intended to approximate the geographic service area.]
 [@cr-mytext8]{highlight="cr-t8,cr-t9"} Keep scrolling.
 :::
 
@@ -1339,3 +1338,13 @@ Video and image credits: Healthy Futures of Texas
 ::: {#refs}
 :::
 ::::
+
+::: {.callout-note collapse="true"}
+### Citation and Contact
+
+To learn more about this project, contact Jen Biundo at <jbiundo@healthyfutures-tx.org>.
+
+If you use or reference this tool, please cite:
+
+Souch, J., & Healthy Futures of Texas. (2026). *Mobile Health Unit Data Story Tool*. Healthy Futures of Texas.
+:::
