@@ -731,54 +731,78 @@ a[role="doc-biblioref"] sup {
 }
 
 
-/* Override "note" callout (the blue one) */
+
+
+/* Kill default Quarto "note" styling (the blue) */
 .callout.callout-note {
-  border-left-color: #D24699 !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* Icon color */
-.callout.callout-note .callout-icon {
-  color: #D24699 !important;
+/* Force your header to fully override */
+.callout.callout-note .callout-header {
+  background-color: #53284f !important;
+  color: white !important;
 }
 
-/* Remove default blue background tint */
-.callout.callout-note {
+/* Remove that faint blue header overlay */
+.callout.callout-note .callout-title-container {
+  background: transparent !important;
+}
+
+/* Ensure body matches your design (no gray/blue tint) */
+.callout.callout-note .callout-body {
   background-color: #F8F5FA !important;
 }
 
 
 
 /* ================================
-   BASE CALLOUT
+   CALLOUT (CLEAN CARD STYLE)
 ================================ */
 
 .callout {
-  border: none;
-  border-radius: 12px;
+  max-width: 800px;
+  margin: 1rem auto;
+  border-radius: 14px;
   background-color: #F8F5FA;
-  overflow: hidden; /* ensures clean rounded edges */
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+/* Subtle left accent (not bulky) */
+.callout::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: #D24699;
 }
 
 /* ================================
-   HEADER (FIXED)
+   HEADER
 ================================ */
 
 .callout-header {
   background-color: #53284f;
   color: white;
-  padding: 0.6rem 1rem;
+  padding: 0.7rem 1.2rem;
+  font-weight: 600;
 }
 
-/* Remove weird inner rounding */
+/* Title text (clean, no pink clash) */
+.callout-title {
+  color: white;
+  font-weight: 600;
+}
+
+/* Remove weird container styling */
 .callout-title-container {
   background: none;
   border-radius: 0;
-}
-
-/* Title text */
-.callout-title {
-  color: #D24699;
-  font-weight: 600;
 }
 
 /* ================================
@@ -788,36 +812,33 @@ a[role="doc-biblioref"] sup {
 .callout-body {
   color: #53284f;
   padding: 1rem 1.25rem;
+  line-height: 1.5;
 }
 
 /* ================================
-   LEFT ACCENT (SUBTLE, FIXED)
+   REMOVE ICON
 ================================ */
 
-.callout {
-}
-
-
-/* Override Quarto + Closeread defaults */
-.callout {
-  background-color: #F8F5FA !important;
-  border-left: 15px solid #D24699 !important;
-  opacity: 1 !important;
-  border-radius: 25px;
-}
-
-/* Header must override default blue/gray */
-.callout-header {
-  background-color: #53284f !important;
-  color: white !important;
-}
-
-/* Remove muted/disabled look */
-.callout.callout-style-default {
-  background-color: #F8F5FA !important;
-}
-
-/* Remove callout icon completely */
 .callout-icon {
-  display: none !important;
+  display: none;
+}
+
+/* ================================
+   HOVER (SUBTLE POLISH)
+================================ */
+
+.callout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transition: all 0.2s ease;
+}
+
+
+
+
+h2:has(+ .callout) {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: white;
 }
