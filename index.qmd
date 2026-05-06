@@ -1,5 +1,10 @@
 ---
-format: closeread-html
+format:
+  closeread-html:
+    citations-hover: true
+    footnotes-hover: true
+bibliography: references.bib
+csl: american-medical-association.csl # Optional: for formatting
 ---
 
 # The geography of healthcare.
@@ -10,10 +15,9 @@ format: closeread-html
 
 Across the [268,597 square miles of Texas]{.key-number}, access to women’s healthcare is deeply uneven. Large regions of the state function as “healthcare deserts,” where high- population communities have limited or sometimes no access to nearby clinics providing essential services like contraception, cancer screenings, and preventive care. Many rural Texans face long travel distances, limited transportation options, and months-long wait times.
 
-::: {.cr-section .emphasis-section layout="overlay-center"}
+::::::: {.cr-section .emphasis-section layout="overlay-center"}
 ::: progress-block
 These barriers make timely, comprehensive healthcare out of reach for many, underscoring the urgent need for solutions that meet people where they are. @cr-myimage
-
 :::
 
 ::: {#cr-myimage}
@@ -30,15 +34,12 @@ These barriers make timely, comprehensive healthcare out of reach for many, unde
     <source src="Patient Video 1.mp4" type="video/mp4">
   </video>
 </div>
-
 ```
 :::
 
 ::: progress-block
-
 That’s where mobile health care units come in. @cr-myimage1
 :::
-
 
 ::: {#cr-myimage1}
 ```{=html}
@@ -54,17 +55,11 @@ That’s where mobile health care units come in. @cr-myimage1
     <source src="output_video.mp4" type="video/mp4">
   </video>
 </div>
-
 ```
 :::
-
-
-
-
-:::::
+:::::::
 
 ### Why does this matter?
-
 
 ::: {.cr-section .quote-section .hide-narrative layout="overlay-center"}
 Learn more. @cr-mytext1
@@ -72,45 +67,37 @@ Learn more. @cr-mytext1
 | {#cr-mytext1 .cr-text .scale-to-fill}
 | The impact on women’s health has been especially severe. Nearly half of Texas counties (46.5%) are classified as [maternity care deserts]{#cr-t1}, meaning they lack access to birthing facilities or maternity care providers altogether. For thousands of women, even basic pregnancy care requires traveling far from home.
 
+@cr-mytext1 Keep scrolling to learn more.
+:::
 
-[@cr-mytext1]{highlight="cr-t1"} Keep scrolling to learn more.
-:::::
-
-
-::: {.cr-section .quote-section  .hide-narrative layout="overlay-center"}
+::: {.cr-section .quote-section .hide-narrative layout="overlay-center"}
 Learn more. @cr-mytext2
 
 | {#cr-mytext2 .cr-text .scale-to-fill}
-| Barriers to care extend beyond pregnancy. Across Texas, [1.75 million women]{#cr-t5} in need live in contraceptive deserts, where access to affordable birth control is limited or nonexistent. In Texas, [153,040 women]{#cr-t6} live in counties without a single health center offering a full range of birth control methods. Together, these gaps in maternal and women’s healthcare make timely,  comprehensive care out of reach for many.
+| Barriers to care extend beyond pregnancy. Across Texas, [1.75 million women]{#cr-t5} in need live in contraceptive deserts, where access to affordable birth control is limited or nonexistent. In Texas, [153,040 women]{#cr-t6} live in counties without a single health center offering a full range of birth control methods. Together, these gaps in maternal and women’s healthcare make timely, comprehensive care out of reach for many.
 
-
-[@cr-mytext2]{highlight="cr-t5,cr-t6"} Keep scrolling. 
-
+@cr-mytext2 Keep scrolling.
 :::
+
 ### Where is the need?
 
 :::: {.cr-section layout="overlay-center"}
 **Population**\
-This map shows the population of women of reproductive age (15-49) in 2023. @cr-map
+This map shows the population of women of reproductive age (15-49) in 2023.[@esri_fertility_2025] @cr-map
 
 **Providers per 1,000**\
-This map shows the ratio of providers – such as doctors, nurses practitioners, or physician assistants – with at least 10 new birth control prescriptions per 1,000 women of reproductive age in 2023. 
+This map shows the ratio of providers – such as doctors, nurses practitioners, or physician assistants – with at least 10 new birth control prescriptions per 1,000 women of reproductive age in 2023.[@gwhwi_contraception_2022]
 
+**The Family Planning Program** is a General Revenue-funded, limited-benefit program that serves uninsured men and women across Texas.[@hhsc_whp_2025]\
+Services covered include:\
+• Birth control\
+• Cancer screenings\
+• Chronic disease testing & treatment @cr-map
 
-**The Family Planning Program** is a General Revenue-funded, limited-benefit program that serves uninsured men and women across Texas.  
-Services covered include:  
-• Birth control  
-• Cancer screenings  
-• Chronic disease testing & treatment  @cr-map
-
-
-
-
-**Healthy Texas Women (HTW)** is a Medicaid waiver, limited-benefit program that provides healthcare and family planning services to women aged 15-44 with low income and no insurance.  
-Services covered include:  
-• Birth control  
-• Cancer screenings  
-• Chronic disease testing  & treatment  @cr-map
+**Healthy Texas Women (HTW)** is a Medicaid waiver, limited-benefit program that provides healthcare and family planning services to women aged 15-44 with low income and no insurance. [@hhsc_whp_2025] Services covered include:\
+• Birth control\
+• Cancer screenings\
+• Chronic disease testing & treatment @cr-map
 
 ::: {#cr-map}
 ```{r}
@@ -520,32 +507,26 @@ m
 
 Mobile healthcare units are designed to close gaps by bringing services directly to patients and communities, especially in rural areas. Mobile clinics reduce the distance, time, and cost barriers that prevent many women from accessing care. Mobile clinics set up in trusted community spaces and adapt their routes based on need. They offer a flexible, efficient way to deliver essential women’s health services, such as birth control, cancer screenings, prenatal care, and preventive visits. For women who don’t have reliable access to transportation, mobile clinics can be a literal lifeline. When speaking to patients, they praise the convenience, as they are no longer required to travel hours from home, miss work, school, or childcare. Mobile clinics don’t just expand access; they help ensure care happens earlier, more consistently, and on patients’ terms.
 
-
-::: {.cr-section .quote-section .hide-narrative  layout="overlay-center"}
-
+::: {.cr-section .quote-section .hide-narrative layout="overlay-center"}
 Keep scrolling. @cr-mytext0
 
 | {#cr-mytext0 .cr-text .scale-to-fill}
 | **Voices of Patients:**
-| “I got scared after my neighbor died of breast cancer. She came to me one day and showed me her left breast. I told her she needed to go to a doctor, but it was too late. She suffered for a year and died of breast cancer, because she [couldn’t find the right medical services]{#cr-t1}. I then decided I needed to find a way to live for my family. When I discovered your clinic and I learned about the services you all provide, [I found hope again]{#cr-t2}. I feel that my health is important to my family, because without me, I don’t know how they would be able to take care of themselves.”
+| “I got scared after my neighbor died of breast cancer. She came to me one day and showed me her left breast. I told her she needed to go to a doctor, but it was too late. She suffered for a year and died of breast cancer, because she couldn’t find the right medical services. I then decided I needed to find a way to live for my family. When I discovered your clinic and I learned about the services you all provide, [I found hope again]{#cr-t2}. I feel that my health is important to my family, because without me, I don’t know how they would be able to take care of themselves.”
 
-                            
-Keep scrolling. [@cr-mytext0]{hlz="cr-t1,cr-t2"} 
+Keep scrolling. @cr-mytext0
 :::
-
-
 
 ### Where do they go?
 
 :::: {.cr-section layout="overlay-right"}
-@cr-map2 A single mobile health unit can extend care across multiple counties that aren’t served by brick-and-mortar clinics. 
+@cr-map2 A single mobile health unit can extend care across multiple counties that aren’t served by brick-and-mortar clinics.
 
-This map shows the route for the mobile clinic operated by the South Texas Family Planning & Health Corporation (STFPHC). Their mobile clinic traveled to 196 locations across 18 counties in 2025, reaching many communities with no other health care access.
+This map shows the route[^1] for the mobile clinic operated by the South Texas Family Planning & Health Corporation (STFPHC).[@tiger_roads_2019] Their mobile clinic traveled to 196 locations across 18 counties in 2025, reaching many communities with no other health care access.[@mobile_stops_2025]
 
 You can scroll around and zoom in and out.
 
 By 2026, STFPHC had grown to operate a second mobile unit and was approved to serve 29 counties—demonstrating both the success of mobile health services and the increasing demand for accessible care.
-
 
 ::: {#cr-map2}
 ```{r map2}
@@ -1053,16 +1034,17 @@ m
 
 ```
 :::
-
 ::::
 
-::: {.cr-section .quote-section  .hide-narrative layout="overlay-left"}
+[^1]: Route was approximated using ZIP codes provided by South Texas Family Planning & Health Corporation
+
+::: {.cr-section .quote-section .hide-narrative layout="overlay-left"}
 Learn more. @cr-mytext8
 
 | {#cr-mytext8 .cr-text .scale-to-fill}
 | In 2025, there were served [2,576 patients]{#cr-t8} across [15,000 square miles]{#cr-t9} of Texas using its mobile unit.
 
-[@cr-mytext8]{highlight="cr-t8,cr-t9"} Keep scrolling.
+@cr-mytext8 Keep scrolling.
 :::
 
 :::: {.cr-section .hide-narrative layout="overlay-center"}
@@ -1126,12 +1108,6 @@ df |>
 ```
 :::
 ::::
-
-
-
-
-
-
 
 ### On the ground.
 
@@ -1208,44 +1184,23 @@ df |>
 ::: {.cr-section .quote-section .hide-narrative layout="overlay-left"}
 Learn more. @cr-mytext3
 
-| {#cr-mytext3 .cr-text .scale-to-fill} 
-| "Now we're able to do a [full clinic]{#cr-t1}, just like a brick-and-mortar clinic, [just on wheels]{#cr-t2}."
+| {#cr-mytext3 .cr-text .scale-to-fill}
+| "Now we're able to do a full clinic, just like a brick-and-mortar clinic, just on wheels."
 | — Dr. Perales, DNP, APRN, CNS-BC, Clinic Service Director, STFPHC
-|                               
-Scroll on. [@cr-mytext3]{hlz="cr-t1,cr-t2"} 
+| 
+
+Scroll on. @cr-mytext3
 :::
-
-
-
 
 ::: {style="text-align: center;"}
 :::
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### What comes next?
 
-
-::: {.cr-section .emphasis-section layout="overlay-center"}
-@cr-myimage-capitol During the 89th Legislative Session, the Texas Women’s Healthcare Coalition and its partners secured [\$20 million]{.key-number1} in new state funding to expand mobile women's health units across Texas, doubling down on a commitment to meet women where they are. 
+:::: {.cr-section .emphasis-section layout="overlay-center"}
+@cr-myimage-capitol During the 89th Legislative Session, the Texas Women’s Healthcare Coalition and its partners secured [\$20 million]{.key-number1} in new state funding to expand mobile women's health units across Texas, doubling down on a commitment to meet women where they are.
 
 This investment represents [\$10 million more]{.key-number1} than the amount secured in 2023, signaling growing legislative recognition of mobile healthcare as a critical solution to access gaps. This funding is the direct result of sustained, collective advocacy and a willingness by providers to find innovative solutions to reach the counties around them.
- 
 
 ::: {#cr-myimage-capitol}
 ```{=html}
@@ -1261,8 +1216,80 @@ This investment represents [\$10 million more]{.key-number1} than the amount sec
     <source src="Capitol Video.mp4" type="video/mp4">
   </video>
 </div>
-
 ```
 :::
+::::
 
+```{=html}
+<style>
+
+.section-break {
+  margin-top: 5rem;
+  padding-top: 3rem;
+  border-top: 2px solid #ddd;
+}
+</style>
+```
+
+### 
+
+## Methodology
+
+::: {.callout-note collapse="true"}
+### Data Notes
+
+**Summary**
+
+The Mobile Health Unit Data Story Tool was developed by the research department of Healthy Futures of Texas for the Texas Women’s Healthcare Coalition. The application was built using RStudio (version 2026.01.0+392) and Quarto (version 1.8.25), with the Closeread extension used to structure the narrative interface. Narrative elements were rendered in HTML, and interactive features were implemented using JavaScript [@ecmascript_2024].
+
+**Data Sources**
+
+ACS Fertility Centroids/Boundaries[@esri_fertility_2025]
+
+Source: Esri Demographics Team Data as of: April 9, 2025 This dataset contains the most recent American Community Survey (ACS) 5-year estimates on fertility in the past 12 months by age of mother. Data are available at tract, county, and state geographic levels.
+
+***Prescription Contraception Workforce***[@gwhwi_contraception_2022]
+
+Source: Fitzhugh Mullan Institute for Health Workforce Equity, George Washington University (2022) Available at: https://www.gwhwi.org/reproductivehealth.html
+
+This dataset tracks the location, specialty, and distribution of the prescription contraception workforce. It is based on IQVIA prescription claims identifying providers with at least 10 new prescriptions for contraceptive pills, patches, or rings. The data cover approximately 92–94% of U.S. retail prescription claims from 2019–2023.
+
+***FPP and HTW Provider Locations***[@hhsc_whp_2025]
+
+Source: Texas Health and Human Services Commission (2025), Women’s Health Programs Savings and Performance Report for Fiscal Year 2024
+
+This dataset includes enrollment, utilization, and provider-level metrics for the Healthy Texas Women (HTW) and Family Planning Program (FPP). It provides information on patient counts, geographic distribution, contraceptive use (including LARC), and service utilization by procedure code. Supporting documentation details methods for calculating client counts, expenditures, and demographic characteristics.
+
+***Mobile Health Unit (MHU) Client Data***[@mobile_stops_2025]
+
+Data as of: December 31, 2025
+
+This dataset summarizes 2025 Q1–Q4 mobile health unit visits by county across multiple providers, including Special Health Resources for Texas, Inc.; South Texas Family Planning & Health Corp.; Parkland Health; Gateway Community Health Center; Baylor Scott & White Research Institute; and Barrio Comprehensive Family Health Care. Data were provided directly by participating clinics.
+
+***Mobile Stops Audit – South Texas Family Planning***[@mobile_stops_2025]
+
+Data as of: December 31, 2025
+
+This dataset documents all mobile unit stops conducted by South Texas Family Planning & Health Corp. during 2025.
+
+***TIGER/Line Shapefile (Primary and Secondary Roads)***[@tiger_roads_2019]
+
+Source: U.S. Census Bureau (2019)
+
+This shapefile includes primary and secondary road networks for Texas derived from the TIGER/Line database. The dataset is part of the Census Bureau’s Master Address File/Topologically Integrated Geographic Encoding and Referencing (MAF/TIGER) system, which provides a seamless national geographic framework.
+
+**Geocoding**
+
+All coordinates were generated using the Geocode extension in Google Sheets (Awesome Table).
+
+**Media**
+
+Video and image credits: Healthy Futures of Texas
 :::
+
+:::: {.callout-note collapse="true"}
+### Show References
+
+::: {#refs}
+:::
+::::

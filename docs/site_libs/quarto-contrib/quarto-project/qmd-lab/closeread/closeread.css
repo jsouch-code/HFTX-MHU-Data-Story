@@ -592,3 +592,77 @@ h3, h4, h5, h6 {
   background: #D24699;
   color: #fff;
 }
+
+
+
+
+
+/* Remove default numbering */
+.footnotes ol {
+  list-style: none;
+  padding-left: 1;
+  counter-reset: fn;   /* ← ADD THIS */
+}
+
+/* Increment + insert letters */
+.footnotes li {
+  counter-increment: fn;   /* ← ADD THIS */
+}
+
+.footnotes li::before {
+  content: counter(fn, lower-alpha) ". ";
+}
+
+/* Align footnote marker + text properly */
+.footnotes li {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Style the letter marker */
+.footnotes li::before {
+  content: counter(fn, lower-alpha) ". ";
+  width: 1.5em;
+  color:#d42699;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+
+
+
+/* Reset counter */
+body {
+  counter-reset: footnote;
+}
+
+/* Footnote references (in text) */
+a[role="doc-noteref"] {
+  counter-increment: footnote;
+  color:#D24699;
+  font-weight: 600;
+  
+}
+
+/* Replace number with letter */
+a[role="doc-noteref"]::before {
+  content: counter(footnote, lower-alpha);
+  font-size: 0.75em;
+  color:#D24699;  vertical-align: super;
+}
+
+/* Hide the original number */
+a[role="doc-noteref"] sup {
+  display: none;
+}
+
+
+/* Reference superscripts */
+a[role="doc-biblioref"],
+a[role="doc-biblioref"] sup {
+  color: #D24699 !important;
+  font-weight: 600;/* change to your color */
+}
+
+
+
