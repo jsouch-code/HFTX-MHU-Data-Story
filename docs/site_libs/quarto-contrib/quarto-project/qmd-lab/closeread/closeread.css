@@ -622,33 +622,57 @@ h3, h4, h5, h6 {
 /* Remove default numbering */
 .footnotes ol {
   list-style: none;
-  padding-left: 1em;
-  counter-reset: fn;   /* ← ADD THIS */
+  padding-left: 0;
+  counter-reset: fn;
+  max-width: 60vw;
 }
 
-/* Increment + insert letters */
+/* Footnote items */
 .footnotes li {
-  counter-increment: fn;   /* ← ADD THIS */
+  counter-increment: fn;
+  position: relative;
+  padding-left: 1.8em;
+  margin-bottom: 0.6em;
 }
 
+/* Custom letter marker */
 .footnotes li::before {
-  content: counter(fn, lower-alpha) ". ";
-}
-
-/* Align footnote marker + text properly */
-.footnotes li {
-  display: flex;
-  align-items: flex-start;
-}
-
-/* Style the letter marker */
-.footnotes li::before {
-  content: counter(fn, lower-alpha) ". ";
-  width: 1.5em;
-  color:inherit;
+  content: counter(fn, lower-alpha) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
   font-weight: 600;
-  flex-shrink: 0;
+  color: inherit;
 }
+
+/* Remove paragraph spacing added by Pandoc */
+.footnotes li p {
+  margin: 0;
+  display: inline;
+}
+
+
+.footnotes {
+  max-width: 60vw;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -713,24 +737,38 @@ a[role="doc-biblioref"] sup {
 }
 
 
-/* Make each reference a 2-column layout */
+
+
+/* Reference block */
+.references {
+  line-height: 1.55;
+}
+
+/* Each citation */
 .references .csl-entry {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5em;
+  margin-bottom: 0.65em;
 }
 
-/* Number column */
+/* Number */
 .references .csl-left-margin {
-  min-width: 5em;
-}
-
-/* Text column */
-.references .csl-right-inline {
-  flex: 1;
+  display: inline;
+  margin-right: 0.35em;
 }
 
 
+
+
+
+
+
+
+
+/* Remove hanging indent from references */
+.references .csl-entry {
+  padding-left: 0 !important;
+  text-indent: 0 !important;
+  margin-left: 0 !important;
+}
 
 
 /* Kill default Quarto "note" styling (the blue) */
