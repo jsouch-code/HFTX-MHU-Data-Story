@@ -905,7 +905,7 @@ h1 .info-icon {
 
   color: rgba(255,255,255,0.5);
 
-  font-size: 0.85rem;
+  font-size: 0.5rem;
 
   cursor: help;
 
@@ -921,7 +921,7 @@ h1 .info-icon {
 
   transform: translateX(-50%);
 
-  width: 300px;
+  width: 60vw;
 
   padding: 0.9rem 1rem;
 
