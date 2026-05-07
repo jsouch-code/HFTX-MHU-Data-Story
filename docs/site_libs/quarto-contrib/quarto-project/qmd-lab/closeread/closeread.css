@@ -907,14 +907,14 @@ h1 .info-icon {
 
   font-size: 0.5rem;
 
-  cursor: help;
+  cursor: help
 
   position: relative;
   vertical-align: middle;
 }
 
 .info-popup {
-  position: absolute;
+  position: fixed;
 
   top: 42px;
   left: 50%;
@@ -944,7 +944,6 @@ h1 .info-icon {
   z-index: 9999;
 }
 
-
 .info-icon:hover .info-popup,
 .info-icon:focus-within .info-popup {
   opacity: 1;
@@ -958,4 +957,13 @@ h1 .info-icon {
 
 .info-popup li {
   margin-bottom: 0.7rem;
+}
+
+.info-popup {
+  position: fixed;
+  top: 120px;              /* adjust vertical placement */
+  left: 50vw;              /* viewport center */
+  transform: translateX(-50%);
+  max-width: 400px;
+  z-index: 9999;
 }
