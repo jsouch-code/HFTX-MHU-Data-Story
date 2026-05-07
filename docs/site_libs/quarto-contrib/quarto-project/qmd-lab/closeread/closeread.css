@@ -872,6 +872,90 @@ a[role="doc-biblioref"] sup {
 }
 
 
+h1 .info-icon {
+  opacity: 1;
+}
+
+h1 .info-icon > :not(.info-popup) {
+  opacity: 0.5;
+}
+
+h1 .info-icon {
+  width: 16px;
+  height: 16px;
+
+  font-size: 0.55rem;
+
+  border-width: 1.5px;
+}
 
 
 
+
+h1 .info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 0.45rem;
+  margin-top: -4px;
+
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.5);
+
+  color: rgba(255,255,255,0.5);
+
+  font-size: 0.85rem;
+
+  cursor: help;
+
+  position: relative;
+  vertical-align: middle;
+}
+
+.info-popup {
+  position: absolute;
+
+  top: 42px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 300px;
+
+  padding: 0.9rem 1rem;
+
+  background: white;
+  color: #4b2354;
+
+  border-radius: 12px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+
+  font-size: 0.92rem;
+  line-height: 1.5;
+  font-weight: 400;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: all 0.2s ease;
+
+  z-index: 9999;
+}
+
+
+.info-icon:hover .info-popup,
+.info-icon:focus-within .info-popup {
+  opacity: 1;
+  visibility: visible;
+}
+
+.info-popup ul {
+  padding-left: 1rem;
+  margin: 0;
+}
+
+.info-popup li {
+  margin-bottom: 0.7rem;
+}

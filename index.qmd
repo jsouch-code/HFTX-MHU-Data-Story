@@ -9,7 +9,8 @@ link-citations: true
 # Optional: for formatting
 ---
 
-# The geography of healthcare.
+
+# The geography of healthcare. <span class="info-icon">i<span class="info-popup">Scroll to explore maps, hover over graphics, and interact with visual elements throughout the story.</span></span>
 
 ## Mobile women's health clinics in texas.
 
