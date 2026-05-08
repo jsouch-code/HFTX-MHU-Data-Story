@@ -240,7 +240,7 @@ m <- leaflet(
       round(PWCT_TX_2023_total_PerK, 2),
       "providers per 1,000 women aged 15–49 in",
       CNTY_NM,
-      "County in 2023 with 10 new birth control prescriptions per 1,000 women of reproductive age in 2023."
+      "County providing birth control in 2023."
     ),
     labelOptions = labelOptions(
       direction = "auto",
@@ -1071,7 +1071,7 @@ m
 Learn more. @cr-mytext8
 
 | {#cr-mytext8 .cr-text .scale-to-fill}
-| In 2025, there were served [2,576 patients]{#cr-t8} [@mobile_clientsserved_2025] across [15,000 square miles]{#cr-t9} of Texas using its mobile unit.^[Area represents the combined land area of the 18 counties served by the mobile unit in 2025 and is intended to approximate the geographic service area.]
+| In 2025, they served [2,576 patients]{#cr-t8} [@mobile_clientsserved_2025] across [15,000 square miles]{#cr-t9} of Texas using its mobile unit.^[Area represents the combined land area of the 18 counties served by the mobile unit in 2025 and is intended to approximate the geographic service area.]
 [@cr-mytext8]{highlight="cr-t8,cr-t9"} Keep scrolling.
 :::
 
