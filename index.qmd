@@ -752,7 +752,7 @@ js_code <- paste0(
 ",
 "    iconSize: [", marker_w, ", ", marker_h, "],
 ",
-"    iconAnchor: [", round(marker_w/2), ", ", marker_h, "]
+"    iconAnchor: [", round(marker_w/2), ", ", round(marker_h/2), "]
 ",
 "  });
 ",
@@ -934,21 +934,25 @@ js_code <- paste0(
 ",
 "      tracer = L.marker([pts[0][1], pts[0][0]], { icon: markerIcon }).addTo(map);
 ",
-"      tracer.bindPopup(buildTracerTooltip(feature, gradientState.baseDistanceDriven), {
+"      tracer.bindTooltip(buildTracerTooltip(feature, gradientState.baseDistanceDriven), {
 ",
-"        closeButton: true, autoClose: false, closeOnClick: false,
+"        permanent: true,
 ",
-"        offset: [0, -", marker_h, "]
+"        direction: 'top',
 ",
-"      });
+"        offset: [0, -", round(marker_h/2), "],
 ",
-"      tracer.openPopup();
+"        opacity: 0.95,
+",
+"        className: 'route-live-tooltip'
+",
+"      }).openTooltip();
 ",
 "    } else {
 ",
 "      tracer.setLatLng([pts[0][1], pts[0][0]]);
 ",
-"      tracer.setPopupContent(buildTracerTooltip(feature, gradientState.baseDistanceDriven));
+"      tracer.setTooltipContent(buildTracerTooltip(feature, gradientState.baseDistanceDriven));
 ",
 "    }
 ",
@@ -958,35 +962,75 @@ js_code <- paste0(
 ",
 "    var idx = 1;
 ",
-"    var stepMs = Math.max(10, Math.floor(partMs / pointsPerPart));
+"    var segDurationMs = Math.max(35, Math.floor(partMs / pointsPerPart));
 ",
-"    var timer = setInterval(function() {
+"
 ",
-"      if (idx >= pts.length) { clearInterval(timer); setTimeout(done, pausePartMs); return; }
+"    function animateSegment() {
+",
+"      if (idx >= pts.length) { setTimeout(done, pausePartMs); return; }
+",
+"      var a = pts[idx-1], b = pts[idx];
 ",
 "      var t = (gradientState.totalSegs <= 1) ? 1 : (gradientState.drawnSegs / (gradientState.totalSegs - 1));
 ",
 "      var segColor = colorAt(t);
 ",
-"      var a = pts[idx-1], b = pts[idx];
+"      var startTs = null;
 ",
-"      L.polyline([[a[1], a[0]], [b[1], b[0]]], { color: segColor, weight: 3, opacity: 1, lineCap: 'round',lineJoin: 'round' }).addTo(group);
+"
 ",
-"      tracer.setLatLng([b[1], b[0]]);
+"      function step(ts) {
 ",
-"      setTracerRotation(tracer, bearingDeg(a, b));
+"        if (startTs === null) startTs = ts;
 ",
-"      gradientState.drawnSegs++;
+"        var raw = Math.min(1, (ts - startTs) / segDurationMs);
 ",
-"      var progress = (gradientState.totalSegs <= 0) ? 1 : Math.min(1, gradientState.drawnSegs / gradientState.totalSegs);
+"        var eased = raw * raw * (3 - 2 * raw);
 ",
-"      var distanceDriven = gradientState.baseDistanceDriven + (gradientState.featureDistance * progress);
+"        var lng = a[0] + (b[0] - a[0]) * eased;
 ",
-"      tracer.setPopupContent(buildTracerTooltip(feature, distanceDriven));
+"        var lat = a[1] + (b[1] - a[1]) * eased;
 ",
-"      idx++;
+"        tracer.setLatLng([lat, lng]);
 ",
-"    }, stepMs);
+"        setTracerRotation(tracer, bearingDeg(a, b));
+",
+"        if (raw < 1) {
+",
+"          requestAnimationFrame(step);
+",
+"          return;
+",
+"        }
+",
+"
+",
+"        L.polyline([[a[1], a[0]], [b[1], b[0]]], { color: segColor, weight: 3, opacity: 1, lineCap: 'round', lineJoin: 'round' }).addTo(group);
+",
+"        gradientState.drawnSegs++;
+",
+"        var progress = (gradientState.totalSegs <= 0) ? 1 : Math.min(1, gradientState.drawnSegs / gradientState.totalSegs);
+",
+"        var distanceDriven = gradientState.baseDistanceDriven + (gradientState.featureDistance * progress);
+",
+"        tracer.setTooltipContent(buildTracerTooltip(feature, distanceDriven));
+",
+"        idx++;
+",
+"        animateSegment();
+",
+"      }
+",
+"
+",
+"      requestAnimationFrame(step);
+",
+"    }
+",
+"
+",
+"    animateSegment();
 ",
 "  }
 
