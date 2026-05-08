@@ -987,7 +987,7 @@ h1 .info-icon {
 [data-bs-toggle="modal"][data-bs-target="#modal-scrollable"] {
   position: fixed;
 
-  top: 96vh;
+  top: 92vh;
   right: -5px;
 
   width: 50px;
