@@ -752,7 +752,7 @@ js_code <- paste0(
 ",
 "    iconSize: [", marker_w, ", ", marker_h, "],
 ",
-"    iconAnchor: [", round(marker_w/2), ", ", round(marker_h/2), "]
+"    iconAnchor: [", round(marker_w/2), ", ", marker_h, "]
 ",
 "  });
 ",
@@ -934,27 +934,45 @@ js_code <- paste0(
 ",
 "      tracer = L.marker([pts[0][1], pts[0][0]], { icon: markerIcon }).addTo(map);
 ",
-"      tracer.bindTooltip(buildTracerTooltip(feature, gradientState.baseDistanceDriven), {
+"      tracer.bindPopup(buildTracerTooltip(feature, gradientState.baseDistanceDriven), {
 ",
-"        permanent: true,
+"        closeButton: true,
 ",
-"        direction: 'top',
+"        autoClose: false,
 ",
-"        offset: [0, -", round(marker_h/2), "],
+"        closeOnClick: false,
 ",
-"        opacity: 0.95,
+"        autoPan: false,
 ",
-"        className: 'route-live-tooltip'
+"        offset: [0, -", marker_h, "]
 ",
-"      }).openTooltip();
+"      }).openPopup();
 ",
 "    } else {
 ",
 "      tracer.setLatLng([pts[0][1], pts[0][0]]);
 ",
-"      tracer.setTooltipContent(buildTracerTooltip(feature, gradientState.baseDistanceDriven));
+"      tracer.setPopupContent(buildTracerTooltip(feature, gradientState.baseDistanceDriven));
 ",
 "    }
+",
+"    function keepTracerAndPopupInView() {
+",
+"      if (!tracer) return;
+",
+"      map.panInside(tracer.getLatLng(), {
+",
+"        paddingTopLeft: [30, 170],
+",
+"        paddingBottomRight: [30, 30],
+",
+"        animate: false
+",
+"      });
+",
+"    }
+",
+"    keepTracerAndPopupInView();
 ",
 "    tracerHeading = null;
 ",
@@ -962,7 +980,7 @@ js_code <- paste0(
 ",
 "    var idx = 1;
 ",
-"    var segDurationMs = Math.max(35, Math.floor(partMs / pointsPerPart));
+"    var segDurationMs = Math.max(14, Math.floor((partMs / pointsPerPart) * 0.55));
 ",
 "
 ",
@@ -994,6 +1012,8 @@ js_code <- paste0(
 ",
 "        tracer.setLatLng([lat, lng]);
 ",
+"        keepTracerAndPopupInView();
+",
 "        setTracerRotation(tracer, bearingDeg(a, b));
 ",
 "        if (raw < 1) {
@@ -1014,7 +1034,7 @@ js_code <- paste0(
 ",
 "        var distanceDriven = gradientState.baseDistanceDriven + (gradientState.featureDistance * progress);
 ",
-"        tracer.setTooltipContent(buildTracerTooltip(feature, distanceDriven));
+"        tracer.setPopupContent(buildTracerTooltip(feature, distanceDriven));
 ",
 "        idx++;
 ",
