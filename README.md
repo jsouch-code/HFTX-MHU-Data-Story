@@ -104,3 +104,7 @@ Real-time service information
 Enhanced mobile interaction patterns
 Public data download functionality
 Additional healthcare infrastructure layers
+
+## Reusing this project as a template
+
+You can adapt this story-map to a different dataset/geography. See `TEMPLATE.md` for a step-by-step reusable workflow, required data schema, parameter changes, and QA checklist.
