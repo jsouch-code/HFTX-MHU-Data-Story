@@ -8,6 +8,11 @@ csl: american-medical-association.csl
 link-citations: true
 filters:
   - modal
+params:
+  place_name: "Texas"
+  population_geojson: "GHWMI_PCWT_2023.geojson"
+  provider_geojson: "ProviderLocations.geojson"
+  report_year: 2023
 # Optional: for formatting
 ---
 
@@ -140,11 +145,11 @@ texas_bounds <- list(
   lat2 = 36.70
 )
 
-texas_map <- st_read("GHWMI_PCWT_2023.geojson", quiet=TRUE) |> 
+texas_map <- st_read(params$population_geojson, quiet=TRUE) |> 
   st_transform(4326) |>
   ms_simplify(keep = 0.05, keep_shapes = TRUE)
 
-providers <- st_read("ProviderLocations.geojson", quiet=TRUE) |>
+providers <- st_read(params$provider_geojson, quiet=TRUE) |>
   st_transform(4326)
 providers <- providers[!is.na(providers$Latitude), ]
 
@@ -204,7 +209,7 @@ m <- leaflet(
       format(round(population, 0), big.mark = ","),
       "women aged 15–49 in",
       CNTY_NM,
-      "County in 2023."
+      "County in", params$report_year, "."
     ),
     popup = ~paste(CNTY_NM, "County"),
     labelOptions = labelOptions(
@@ -240,7 +245,7 @@ m <- leaflet(
       round(PWCT_TX_2023_total_PerK, 2),
       "providers per 1,000 women aged 15–49 in",
       CNTY_NM,
-      "County in 2023 with 10 new birth control prescriptions per 1,000 women of reproductive age in 2023."
+      "County in", params$report_year, "with 10 new birth control prescriptions per 1,000 women of reproductive age."
     ),
     labelOptions = labelOptions(
       direction = "auto",
@@ -593,7 +598,7 @@ highlight_counties <- c(
 
 routes_sf <- st_read("roads_route.gpkg", quiet = TRUE)
 
-texas_map <- st_read("GHWMI_PCWT_2023.geojson", quiet=TRUE) |> 
+texas_map <- st_read(params$population_geojson, quiet=TRUE) |> 
   st_transform(4326) |>
   ms_simplify(keep = 0.05, keep_shapes = TRUE)
 
