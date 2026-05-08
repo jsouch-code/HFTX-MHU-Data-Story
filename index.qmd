@@ -6,13 +6,42 @@ format:
 bibliography: references.bib
 csl: american-medical-association.csl
 link-citations: true
+filters:
+  - modal
 # Optional: for formatting
 ---
 
-
-# The geography of healthcare. <span class="info-icon">i<span class="info-popup">Scroll to explore maps, hover over graphics, and interact with visual elements throughout the story.</span></span>
-
+# The geography of healthcare. 
 ## Mobile women's health clinics in texas.
+
+
+{{< modal toggle target="modal-scrollable" label="ⓘ" >}}
+
+:::: {#modal-scrollable scrollable="true"}
+
+####### How to Navigate the Data Story
+
+This interactive story combines narrative, maps, and data visualizations to explore access to mobile women’s healthcare services across Texas.
+
+- **Scroll through the story** to move between sections and activate different visualizations.
+- **Hover over maps, charts, and graphics** to reveal additional details and contextual information.
+- **Click or tap interactive elements** where available to explore data more closely.
+- Some graphics may support **zooming, panning, or filtering** depending on the device and screen size.
+- Narrative sections and visuals are connected — as you scroll, the graphics update to reflect the current discussion.
+
+This project is designed to be exploratory. Readers are encouraged to move between sections, revisit visualizations, and engage with the data at their own pace.
+
+---
+
+{{< modal dismiss target="modal-scrollable" label="Close" >}}
+
+:::
+
+
+
+
+
+
 
 ### What is the need?
 
