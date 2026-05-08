@@ -1037,8 +1037,9 @@ h1 .info-icon {
 /* Modal size */
 #modal-scrollable .modal-dialog {
   min-width: 50vw;
-  max-height: 80vh;
-  top: 10vh;
+  max-height: 60vh;
+  top: 20vh;
+  bottom:30vh;
 }
 
 
