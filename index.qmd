@@ -793,7 +793,7 @@ js_code <- paste0(
 ",
 "    return [
 ",
-"      '<strong>South Texas Family Planning & Health Corporation (STFPHC)</strong>',,
+"      '<strong>South Texas Family Planning & Health Corporation (STFPHC)</strong>',
 ",
 "      'Total distance driven: ' + formatNumber(distanceDriven*0.62, 1) + ' mi',
 ",
