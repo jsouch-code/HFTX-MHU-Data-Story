@@ -577,10 +577,8 @@ marker_h <- 52
 
 
 
-mapboxmap <- paste0(
-  "https://api.mapbox.com/styles/v1/hftx1/cmlzl9xiy004y01rz2bix892g/tiles/{z}/{x}/{y}?access_token=",
-  Sys.getenv("MAPBOX_TOKEN")
-)
+mapboxmap <- "https://api.mapbox.com/styles/v1/hftx1/cmlzl9xiy004y01rz2bix892g/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaGZ0eDEiLCJhIjoiY211bTF2c2xwMW50bjJ5b2NhZTdpdWd6NCJ9.1Co4ZCbaKxD9QC2SflHcVw"
+
 mb_attribution <- "© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
 
 
