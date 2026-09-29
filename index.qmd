@@ -662,6 +662,12 @@ m <- leaflet(
     ),
     attribution = "&copy; OpenStreetMap contributors &copy; CARTO"
   ) %>%
+  addLegend(
+    position = "bottomleft",
+    colors = "#53284F",
+    labels = "Service areas",
+    opacity = 0.70
+  ) %>%
   addResetMapButton()
 
 
