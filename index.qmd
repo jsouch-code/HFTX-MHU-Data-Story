@@ -1072,6 +1072,159 @@ Learn more. @cr-mytext8
 [@cr-mytext8]{highlight="cr-t8,cr-t9"} Keep scrolling.
 :::
 
+
+
+::: {.cr-section .quote-section  .hide-narrative layout="overlay-left"}
+Learn more. @cr-mytext8
+
+| {#cr-mytext9 .cr-text .scale-to-fill}
+| In 2025, [89% of patients served]{#cr-t9} [@mobile_clientsserved_2025] said that without the MHU they would have [gone without care]{#cr-t10} or used the emergency room.
+[@cr-mytext9]{highlight="cr-t9,cr-t10"} Keep scrolling.
+:::
+
+
+::: {cr-dot}
+
+```{r dot}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(echarts4r)
+library(htmlwidgets)
+
+df <- data.frame(
+  x = 1:5,
+  y = rep(1, 5)
+)
+
+# Adult human silhouette
+woman_path <- paste0(
+  "path://",
+
+  # Head
+  "M50 7 ",
+  "C44 7 40 12 40 18 ",
+  "C40 24 44 29 50 29 ",
+  "C56 29 60 24 60 18 ",
+  "C60 12 56 7 50 7 Z ",
+
+  # Neck
+  "M46 30 L46 36 L40 38 ",
+
+  # Left shoulder + arm
+  "C35 39 32 42 30 47 ",
+  "L23 67 ",
+  "C22 70 23 72 26 73 ",
+  "C29 74 31 72 32 69 ",
+  "L38 53 ",
+
+  # Torso + left leg
+  "L38 75 ",
+  "L38 99 ",
+  "C38 101 40 102 43 102 ",
+  "C46 102 47 100 47 98 ",
+  "L47 76 ",
+
+  # Right leg
+  "L53 76 ",
+  "L53 98 ",
+  "C53 100 54 102 57 102 ",
+  "C60 102 62 101 62 99 ",
+  "L62 75 ",
+  "L62 53 ",
+
+  # Right arm
+  "L68 69 ",
+  "C69 72 71 74 74 73 ",
+  "C77 72 78 70 77 67 ",
+  "L70 47 ",
+  "C68 42 65 39 60 38 ",
+
+  # Shoulder + neck
+  "L54 36 L54 30 Z"
+)
+
+df |>
+  e_charts(
+    x,
+    height = "100vh",
+    width = "100vw"
+  ) |>
+
+  e_scatter(
+    y,
+    symbol = woman_path,
+    symbolSize = c(78, 155),
+    itemStyle = list(
+      color = JS(
+        "function(params) {
+          return params.dataIndex === 0
+            ? '#D24699'
+            : '#E3E3E3';
+        }"
+      )
+    )
+  ) |>
+
+  e_title(
+    text = "1 in 5",
+
+    subtext = paste0(
+      "women served had never received women’s preventive health services\n",
+      "or had not received them in the past 10 years."
+    ),
+
+    left = "center",
+    top = "15%",
+    itemGap = 14,
+
+    textStyle = list(
+      color = "#53284F",
+      fontSize = 56,
+      fontWeight = "bold"
+    ),
+
+    subtextStyle = list(
+      color = "#53284F",
+      fontSize = 19,
+      lineHeight = 29,
+      align = "center"
+    )
+  ) |>
+
+  # Tight centered pictogram
+  e_grid(
+    left = "31%",
+    right = "31%",
+    top = "43%",
+    bottom = "23%"
+  ) |>
+
+  e_x_axis(
+    min = 0.25,
+    max = 5.75,
+    show = FALSE
+  ) |>
+
+  e_y_axis(
+    min = 0.25,
+    max = 1.75,
+    show = FALSE
+  ) |>
+
+  e_legend(show = FALSE) |>
+  e_tooltip(show = FALSE) |>
+
+  e_animation(
+    duration = 1600,
+    easing = "cubicOut"
+  )
+```
+
+:::
+
+
 :::: {.cr-section .hide-narrative layout="overlay-center"}
 Learn more. @cr-pie
 
@@ -1133,6 +1286,8 @@ df |>
 ```
 :::
 ::::
+
+
 
 
 
