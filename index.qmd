@@ -1171,7 +1171,7 @@ df |>
     text = "1 in 5",
 
     subtext = paste0(
-      "women served had never received women’s preventive health services\n",
+      "women served had never received women's preventive health services\n",
       "or had not received them in the past 10 years."
     ),
 
@@ -1215,6 +1215,8 @@ df |>
 
   e_legend(show = FALSE) |>
   e_tooltip(show = FALSE) |>
+  e_color(background = "#FFBF3C") |>
+
 
   e_animation(
     duration = 1600,
