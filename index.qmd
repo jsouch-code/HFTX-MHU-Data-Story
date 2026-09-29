@@ -583,11 +583,17 @@ mb_attribution <- "© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> 
 
 
 highlight_counties <- c(
-  "Atascosa","Aransas","Bastrop","Bee","Bexar","Brooks","Cameron",
-  "Comal","Dimmit","Goliad","Gonzales","Guadalupe","Hidalgo",
-  "Jackson","Jim Wells","Kendall","Kerr","Kleberg","Live Oak",
-  "Maverick","Nueces","San Patricio","Starr","Travis","Victoria",
-  "Webb","Williamson","Zapata","Zavala"
+  "Anderson", "Aransas", "Atascosa", "Bastrop", "Bee", "Bexar", "Bowie",
+  "Brooks", "Cameron", "Camp", "Cass", "Cherokee", "Comal", "Dallas",
+  "Delta", "Dimmit", "Duval", "Falls", "Franklin", "Freestone", "Frio",
+  "Goliad", "Gonzales", "Gregg", "Guadalupe", "Harrison", "Henderson",
+  "Hidalgo", "Hill", "Hopkins", "Hunt", "Jackson", "Jim Hogg", "Jim Wells",
+  "Kendall", "Kenedy", "Kerr", "Kinney", "Kleberg", "La Salle", "Lamar",
+  "Limestone", "Live Oak", "Marion", "Maverick", "McLennan", "McMullen",
+  "Medina", "Morris", "Navarro", "Nueces", "Panola", "Rains", "Red River",
+  "Refugio", "Rusk", "San Patricio", "Smith", "Starr", "Titus", "Travis",
+  "Upshur", "Uvalde", "Val Verde", "Van Zandt", "Victoria", "Webb",
+  "Williamson", "Wood", "Zapata", "Zavala"
 )
 
 
@@ -631,6 +637,15 @@ m <- leaflet(
     data = texas_map,
     group = "Population",
     fillColor = "#FFBF3C",
+    weight = 2,
+    color = "white",
+    fillOpacity = 0.70,
+    stroke = TRUE
+  ) %>%
+  addPolygons(
+    data = highlight_map,
+    group = "Service Counties",
+    fillColor = "#53284F",
     weight = 2,
     color = "white",
     fillOpacity = 0.70,
