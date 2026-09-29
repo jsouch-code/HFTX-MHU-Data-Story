@@ -618,39 +618,36 @@ highlight_map <- texas_map |>
   dplyr::filter(CNTY_NM %in% highlight_counties)
 
 # Build Leaflet widget
-m <- leaflet(width = "99vw", height = "99vh", options = leafletOptions(zoomControl = FALSE, scrollWheelZoom = FALSE, minZoom = 6.5)) %>%
+m <- leaflet(
+  width = "99vw",
+  height = "99vh",
+  options = leafletOptions(
+    zoomControl = FALSE,
+    scrollWheelZoom = FALSE,
+    minZoom = 6.5
+  )
+) %>%
   addPolygons(
     data = texas_map,
-    group = "Population",                 # baseGroups label
+    group = "Population",
     fillColor = "#FFBF3C",
-    weight = 2, color = "white",
-    fillOpacity = 0.70, stroke = TRUE) |>
-      addTiles(urlTemplate = mapboxmap, attribution = mb_attribution) |>
-      addProviderTiles("CartoDB.PositronOnlyLabels") |>
-    addResetMapButton() |>
-  addPolygons(
-    data = highlight_map,
-    group = "Highlighted Counties",
-    fillColor = "#53284F",   # strong contrast
     weight = 2,
     color = "white",
-    fillOpacity = 0.6,
+    fillOpacity = 0.70,
     stroke = TRUE
   ) %>%
-  
-   addLayersControl(
-    baseGroups = c("Population"),
-    overlayGroups = c("Highlighted Counties"),
-    options = layersControlOptions(collapsed = FALSE)
+  addTiles(
+    urlTemplate = mapboxmap,
+    attribution = mb_attribution
   ) %>%
-  
-  addResetMapButton() %>%
-  setView(
-    lng = -98.5,   # adjust
-    lat = 27.5,    # adjust
-    zoom = 6.5
-  )
-
+  addTiles(
+    urlTemplate = paste0(
+      "https://basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}.png?key=",
+      "cb1_42km_1_045462db9e45dda45534a17e"
+    ),
+    attribution = "&copy; OpenStreetMap contributors &copy; CARTO"
+  ) %>%
+  addResetMapButton()
 
 
 # Attach JS: slow trace + gradient + moving PNG marker
