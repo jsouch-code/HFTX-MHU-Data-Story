@@ -123,6 +123,9 @@ Services covered include:
 • Cancer screenings  
 • Chronic disease testing  & treatment  @cr-map
 
+**Mobile health unit provider coverage**\
+This map shows the mobile health unit provider—or combination of providers—assigned to each Texas county. Counties without an assignment are marked as areas not covered by MHUs. @cr-map
+
 ::: {#cr-map}
 ```{r}
 #| message: false
@@ -132,6 +135,8 @@ library(leaflet.extras)
 library(sf)
 library(rmapshaper)
 library(htmlwidgets)
+library(dplyr)
+library(tibble)
 
 texas_bounds <- list(
   lng1 = -106.70,
@@ -154,6 +159,121 @@ texas_map$population[is.na(texas_map$population)] <- min_val
 
 pal_pop <- colorNumeric(palette = c("#efe9ef", "#53284F"), domain = texas_map$population)
 pal_perk <- colorNumeric(palette = c("#efe9ef", "#53284F"), domain = texas_map$PWCT_TX_2023_total_PerK)
+
+not_covered <- "Areas Not Covered by MHUs"
+
+provider_colors <- tribble(
+  ~provider, ~color,
+  "Special Health Resources for Texas, Inc.", "#53284F",
+  "Baylor Scott and White Research Institute", "#FFBF3C",
+  "Barrio Comprehensive Family Health Care", "#B8D8EB",
+  "South Texas Family Planning & Health Corporation", "#D24699",
+  "Dallas County Hospital District dba Parkland Health", "#20CAD3",
+  "Women's and Men's Health Services of the Coastal Bend, Inc.", "#FF8300",
+  "Barrio Comprehensive Family Health Care; South Texas Family Planning & Health Corporation", "#5C5E9E",
+  "Barrio Comprehensive Family Health Care; Women's and Men's Health Services of the Coastal Bend, Inc.", "#5FA7A0",
+  "Baylor Scott and White Research Institute; Dallas County Hospital District dba Parkland Health", "#DDCC00",
+  "Gateway Community Health Center, Inc; Women's and Men's Health Services of the Coastal Bend, Inc.", "#00A1DD",
+  "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.", "#EA9CC3",
+  "Gateway Community Health Center, Inc; South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.", "#C2DD9B",
+  "Barrio Comprehensive Family Health Care; South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.", "#76777A",
+  not_covered, "#A191B2"
+)
+
+covered_counties <- tribble(
+  ~county, ~fips, ~provider,
+  "Anderson", "48001", "Special Health Resources for Texas, Inc.",
+  "Bowie", "48037", "Special Health Resources for Texas, Inc.",
+  "Camp", "48063", "Special Health Resources for Texas, Inc.",
+  "Cass", "48067", "Special Health Resources for Texas, Inc.",
+  "Cherokee", "48073", "Special Health Resources for Texas, Inc.",
+  "Delta", "48119", "Special Health Resources for Texas, Inc.",
+  "Franklin", "48159", "Special Health Resources for Texas, Inc.",
+  "Gregg", "48183", "Special Health Resources for Texas, Inc.",
+  "Harrison", "48203", "Special Health Resources for Texas, Inc.",
+  "Henderson", "48213", "Special Health Resources for Texas, Inc.",
+  "Hopkins", "48223", "Special Health Resources for Texas, Inc.",
+  "Lamar", "48277", "Special Health Resources for Texas, Inc.",
+  "Marion", "48315", "Special Health Resources for Texas, Inc.",
+  "Morris", "48343", "Special Health Resources for Texas, Inc.",
+  "Panola", "48365", "Special Health Resources for Texas, Inc.",
+  "Rains", "48379", "Special Health Resources for Texas, Inc.",
+  "Red River", "48387", "Special Health Resources for Texas, Inc.",
+  "Rusk", "48401", "Special Health Resources for Texas, Inc.",
+  "Smith", "48423", "Special Health Resources for Texas, Inc.",
+  "Titus", "48449", "Special Health Resources for Texas, Inc.",
+  "Upshur", "48459", "Special Health Resources for Texas, Inc.",
+  "Van Zandt", "48467", "Special Health Resources for Texas, Inc.",
+  "Wood", "48499", "Special Health Resources for Texas, Inc.",
+  "Falls", "48145", "Baylor Scott and White Research Institute",
+  "Freestone", "48161", "Baylor Scott and White Research Institute",
+  "Hill", "48217", "Baylor Scott and White Research Institute",
+  "Limestone", "48293", "Baylor Scott and White Research Institute",
+  "McLennan", "48309", "Baylor Scott and White Research Institute",
+  "Navarro", "48349", "Baylor Scott and White Research Institute",
+  "Kinney", "48271", "Barrio Comprehensive Family Health Care",
+  "Medina", "48325", "Barrio Comprehensive Family Health Care",
+  "Uvalde", "48463", "Barrio Comprehensive Family Health Care",
+  "Val Verde", "48465", "Barrio Comprehensive Family Health Care",
+  "Bastrop", "48021", "South Texas Family Planning & Health Corporation",
+  "Cameron", "48061", "South Texas Family Planning & Health Corporation",
+  "Comal", "48091", "South Texas Family Planning & Health Corporation",
+  "Goliad", "48175", "South Texas Family Planning & Health Corporation",
+  "Gonzales", "48177", "South Texas Family Planning & Health Corporation",
+  "Guadalupe", "48187", "South Texas Family Planning & Health Corporation",
+  "Hidalgo", "48215", "South Texas Family Planning & Health Corporation",
+  "Jackson", "48239", "South Texas Family Planning & Health Corporation",
+  "Kendall", "48259", "South Texas Family Planning & Health Corporation",
+  "Kerr", "48265", "South Texas Family Planning & Health Corporation",
+  "Starr", "48427", "South Texas Family Planning & Health Corporation",
+  "Travis", "48453", "South Texas Family Planning & Health Corporation",
+  "Victoria", "48469", "South Texas Family Planning & Health Corporation",
+  "Williamson", "48491", "South Texas Family Planning & Health Corporation",
+  "Hunt", "48231", "Dallas County Hospital District dba Parkland Health",
+  "Duval", "48131", "Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Kenedy", "48261", "Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "McMullen", "48311", "Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Refugio", "48391", "Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Bexar", "48029", "Barrio Comprehensive Family Health Care; South Texas Family Planning & Health Corporation",
+  "Frio", "48163", "Barrio Comprehensive Family Health Care; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "La Salle", "48283", "Barrio Comprehensive Family Health Care; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Dallas", "48113", "Baylor Scott and White Research Institute; Dallas County Hospital District dba Parkland Health",
+  "Jim Hogg", "48247", "Gateway Community Health Center, Inc; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Aransas", "48007", "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Bee", "48025", "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Brooks", "48047", "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Jim Wells", "48249", "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Kleberg", "48273", "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Live Oak", "48297", "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Maverick", "48323", "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Nueces", "48355", "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "San Patricio", "48409", "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Webb", "48479", "Gateway Community Health Center, Inc; South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Zapata", "48505", "Gateway Community Health Center, Inc; South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Atascosa", "48013", "Barrio Comprehensive Family Health Care; South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Dimmit", "48127", "Barrio Comprehensive Family Health Care; South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.",
+  "Zavala", "48507", "Barrio Comprehensive Family Health Care; South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc."
+)
+
+provider_map <- texas_map |>
+  left_join(
+    covered_counties |> select(county, provider),
+    by = c("CNTY_NM" = "county")
+  ) |>
+  mutate(provider = coalesce(provider, not_covered))
+
+provider_palette <- setNames(provider_colors$color, provider_colors$provider)
+provider_legend_labels <- vapply(
+  provider_colors$provider,
+  function(x) paste(strwrap(x, width = 48), collapse = "<br>"),
+  character(1)
+)
+
+stopifnot(
+  nrow(covered_counties) == 71L,
+  all(covered_counties$county %in% texas_map$CNTY_NM),
+  sum(provider_map$provider != not_covered) == 71L
+)
 
 m <- leaflet(
   elementId = "test_map",
@@ -257,6 +377,37 @@ m <- leaflet(
     )
   ) |>
 
+  addPolygons(
+    data = provider_map,
+    group = "MHU Provider Coverage",
+    fillColor = ~unname(provider_palette[provider]),
+    weight = 2,
+    color = "white",
+    fillOpacity = 1,
+    stroke = TRUE,
+    highlightOptions = highlightOptions(
+      weight = 5,
+      opacity = 1,
+      color = "#D24699",
+      bringToFront = TRUE
+    ),
+    label = ~paste(CNTY_NM, "County:", provider),
+    popup = ~paste(CNTY_NM, "County:", provider),
+    labelOptions = labelOptions(
+      direction = "auto",
+      textsize = "14px",
+      style = list(
+        "font-weight" = "normal",
+        "padding" = "8px 10px",
+        "font-size" = "14px",
+        "line-height" = "1.3",
+        "width" = "340px",
+        "white-space" = "normal",
+        "word-wrap" = "break-word"
+      )
+    )
+  ) |>
+
   addMarkers(
     data = providers[providers$Grantee == "FPP", ],
     lat = ~Latitude,
@@ -279,7 +430,11 @@ m <- leaflet(
   ) |>
 
   addLayersControl(
-    baseGroups = c("Population", "Total Providers per 1,000 Women 15-49"),
+    baseGroups = c(
+      "Population",
+      "Total Providers per 1,000 Women 15-49",
+      "MHU Provider Coverage"
+    ),
     overlayGroups = c("FPP Providers", "HTW Providers"),
     position = "bottomright",
     options = layersControlOptions(collapsed = TRUE)
@@ -303,12 +458,23 @@ m <- leaflet(
   group = "Total Providers per 1,000 Women 15-49",
   position = "bottomleft",
   className = "legend-perk"
-)|>
+  ) |>
+  addLegend(
+    colors = provider_colors$color,
+    labels = provider_legend_labels,
+    title = "Providers",
+    opacity = 1,
+    group = "MHU Provider Coverage",
+    position = "bottomright",
+    className = "info legend legend-mhu"
+  ) |>
   setMapWidgetStyle(list(background = "white")) |>
   onRender(
     sprintf(
       "function(el, x) {
          var map = this;
+         var coverageLegend = el.querySelector('.legend-mhu');
+         if (coverageLegend) coverageLegend.style.display = 'none';
          var bounds = L.latLngBounds(
            [%f, %f],
            [%f, %f]
@@ -333,8 +499,32 @@ m <- leaflet(
   ) |>
   addResetMapButton() |>
   hideGroup("Total Providers per 1,000 Women 15-49") |>
+  hideGroup("MHU Provider Coverage") |>
   hideGroup("FPP Providers") |>
   hideGroup("HTW Providers")
+
+m <- htmlwidgets::prependContent(
+  m,
+  htmltools::tags$style(
+    paste(
+      "#test_map .legend-mhu {",
+      "  display: none;",
+      "  font-size: 10px;",
+      "  line-height: 12px;",
+      "  max-width: 360px;",
+      "  max-height: 70vh;",
+      "  overflow-y: auto;",
+      "}",
+      "#test_map .legend-mhu i {",
+      "  width: 12px;",
+      "  height: 12px;",
+      "  margin-right: 4px;",
+      "}",
+      "#test_map .legend-mhu strong { font-size: 11px; }",
+      sep = "\n"
+    )
+  )
+)
 
 m
 
@@ -352,7 +542,8 @@ m
 
   const baseLabels = [
     "Population",
-    "Total Providers per 1,000 Women 15-49"
+    "Total Providers per 1,000 Women 15-49",
+    "MHU Provider Coverage"
   ];
 
   const overlayLabels = [
@@ -363,7 +554,8 @@ m
   // These must match the className= you set in addLegend()
   const legendClasses = {
     Population: "legend-pop",
-    Providers: "legend-perk"
+    Providers: "legend-perk",
+    Coverage: "legend-mhu"
   };
 
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -410,7 +602,7 @@ m
         bestIdx = i;
       }
     }
-    return Math.max(0, Math.min(3, bestIdx));
+    return Math.max(0, Math.min(4, bestIdx));
   }
 
   async function clickRadioByLabel(label) {
@@ -448,19 +640,22 @@ m
   }
 
   function showOnlyLegend(which) {
-    // which = "Population" or "Providers"
-    const pop = document.querySelector(`.${legendClasses.Population}`);
-    const per = document.querySelector(`.${legendClasses.Providers}`);
+    const mapElement = document.getElementById(mapId);
+    const pop = mapElement?.querySelector(`.${legendClasses.Population}`);
+    const per = mapElement?.querySelector(`.${legendClasses.Providers}`);
+    const coverage = mapElement?.querySelector(`.${legendClasses.Coverage}`);
 
     if (pop) pop.style.display = (which === "Population") ? "" : "none";
     if (per) per.style.display = (which === "Providers") ? "" : "none";
+    if (coverage) coverage.style.display = (which === "Coverage") ? "block" : "none";
   }
 
   async function applyStep(step) {
     // 0: Population, overlays off
     // 1: Providers per 1,000, overlays off
     // 2: Providers per 1,000, FPP overlay on
-    // 3+: Providers per 1,000, HTW overlay on
+    // 3: Providers per 1,000, HTW overlay on
+    // 4: MHU provider coverage, overlays off
     if (step === 0) {
       await clickRadioByLabel(baseLabels[0]);
       showOnlyLegend("Population");
@@ -473,10 +668,14 @@ m
       await clickRadioByLabel(baseLabels[1]);
       showOnlyLegend("Providers");
       await setOverlays({ fpp: true, htw: false });
-    } else {
+    } else if (step === 3) {
       await clickRadioByLabel(baseLabels[1]);
       showOnlyLegend("Providers");
       await setOverlays({ fpp: false, htw: true });
+    } else {
+      await clickRadioByLabel(baseLabels[2]);
+      showOnlyLegend("Coverage");
+      await setOverlays({ fpp: false, htw: false });
     }
   }
 
@@ -583,19 +782,18 @@ mb_attribution <- "© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> 
 
 
 highlight_counties <- c(
-  "Anderson", "Aransas", "Atascosa", "Bastrop", "Bee", "Bexar", "Bowie",
-  "Brooks", "Cameron", "Camp", "Cass", "Cherokee", "Comal", "Dallas",
-  "Delta", "Dimmit", "Duval", "Falls", "Franklin", "Freestone", "Frio",
-  "Goliad", "Gonzales", "Gregg", "Guadalupe", "Harrison", "Henderson",
-  "Hidalgo", "Hill", "Hopkins", "Hunt", "Jackson", "Jim Hogg", "Jim Wells",
-  "Kendall", "Kenedy", "Kerr", "Kinney", "Kleberg", "La Salle", "Lamar",
-  "Limestone", "Live Oak", "Marion", "Maverick", "McLennan", "McMullen",
-  "Medina", "Morris", "Navarro", "Nueces", "Panola", "Rains", "Red River",
-  "Refugio", "Rusk", "San Patricio", "Smith", "Starr", "Titus", "Travis",
-  "Upshur", "Uvalde", "Val Verde", "Van Zandt", "Victoria", "Webb",
-  "Williamson", "Wood", "Zapata", "Zavala"
+"Anderson", "Aransas", "Atascosa", "Bastrop", "Bee", "Bexar", "Bowie",
+"Brooks", "Cameron", "Camp", "Cass", "Cherokee", "Comal", "Dallas",
+"Delta", "Dimmit", "Duval", "Falls", "Franklin", "Freestone", "Frio",
+"Goliad", "Gonzales", "Gregg", "Guadalupe", "Harrison", "Henderson",
+"Hidalgo", "Hill", "Hopkins", "Hunt", "Jackson", "Jim Hogg", "Jim Wells",
+"Kendall", "Kenedy", "Kerr", "Kinney", "Kleberg", "La Salle", "Lamar",
+"Limestone", "Live Oak", "Marion", "Maverick", "McLennan", "McMullen",
+"Medina", "Morris", "Navarro", "Nueces", "Panola", "Rains", "Red River",
+"Refugio", "Rusk", "San Patricio", "Smith", "Starr", "Titus", "Travis",
+"Upshur", "Uvalde", "Val Verde", "Van Zandt", "Victoria", "Webb",
+"Williamson", "Wood", "Zapata", "Zavala"
 )
-
 
 routes_sf <- st_read("roads_route.gpkg", quiet = TRUE)
 
@@ -645,7 +843,7 @@ m <- leaflet(
   addPolygons(
     data = highlight_map,
     group = "Service Counties",
-    fillColor = "#53284F",
+    fillColor = "#D24699",
     weight = 2,
     color = "white",
     fillOpacity = 0.70,
