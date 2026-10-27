@@ -77,7 +77,7 @@ That’s where mobile health care units come in. @cr-myimage1
 ### Why does this matter?
 
 
-::: {.cr-section .quote-section .hide-narrative layout="overlay-center"}
+::: {.cr-section .quote-section .hide-narrative layout="overlay-right"}
 Learn more. @cr-mytext1
 
 | {#cr-mytext1 .cr-text .scale-to-fill}
@@ -88,7 +88,7 @@ Learn more. @cr-mytext1
 :::::
 
 
-::: {.cr-section .quote-section  .hide-narrative layout="overlay-center"}
+::: {.cr-section .quote-section  .hide-narrative layout="overlay-right"}
 Learn more. @cr-mytext2
 
 | {#cr-mytext2 .cr-text .scale-to-fill}
@@ -100,7 +100,7 @@ Learn more. @cr-mytext2
 :::
 ### Where is the need?
 
-:::: {.cr-section layout="overlay-center"}
+:::: {.cr-section layout="overlay-right"}
 **Population**\
 This map shows the population of women of reproductive age (15-49) in 2023.[@esri_fertility_2025] @cr-map
 
@@ -124,7 +124,7 @@ Services covered include:
 • Chronic disease testing  & treatment  @cr-map
 
 **Mobile health unit provider coverage**\
-This map shows the mobile health unit provider—or combination of providers—assigned to each Texas county. Counties without an assignment are marked as areas not covered by MHUs. @cr-map
+This map shows the number of mobile health unit providers assigned to each Texas county. Darker counties have more overlapping provider service areas. @cr-map
 
 ::: {#cr-map}
 ```{r}
@@ -160,24 +160,12 @@ texas_map$population[is.na(texas_map$population)] <- min_val
 pal_pop <- colorNumeric(palette = c("#efe9ef", "#53284F"), domain = texas_map$population)
 pal_perk <- colorNumeric(palette = c("#efe9ef", "#53284F"), domain = texas_map$PWCT_TX_2023_total_PerK)
 
-not_covered <- "Areas Not Covered by MHUs"
-
-provider_colors <- tribble(
-  ~provider, ~color,
-  "Special Health Resources for Texas, Inc.", "#53284F",
-  "Baylor Scott and White Research Institute", "#FFBF3C",
-  "Barrio Comprehensive Family Health Care", "#B8D8EB",
-  "South Texas Family Planning & Health Corporation", "#D24699",
-  "Dallas County Hospital District dba Parkland Health", "#20CAD3",
-  "Women's and Men's Health Services of the Coastal Bend, Inc.", "#FF8300",
-  "Barrio Comprehensive Family Health Care; South Texas Family Planning & Health Corporation", "#5C5E9E",
-  "Barrio Comprehensive Family Health Care; Women's and Men's Health Services of the Coastal Bend, Inc.", "#5FA7A0",
-  "Baylor Scott and White Research Institute; Dallas County Hospital District dba Parkland Health", "#DDCC00",
-  "Gateway Community Health Center, Inc; Women's and Men's Health Services of the Coastal Bend, Inc.", "#00A1DD",
-  "South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.", "#EA9CC3",
-  "Gateway Community Health Center, Inc; South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.", "#C2DD9B",
-  "Barrio Comprehensive Family Health Care; South Texas Family Planning & Health Corporation; Women's and Men's Health Services of the Coastal Bend, Inc.", "#76777A",
-  not_covered, "#A191B2"
+provider_count_colors <- tribble(
+  ~provider_count, ~label, ~color,
+  0L, "0 providers", "#EFE9EF",
+  1L, "1 provider",  "#C9B2C7",
+  2L, "2 providers", "#8F628B",
+  3L, "3 providers", "#53284F"
 )
 
 covered_counties <- tribble(
@@ -260,19 +248,34 @@ provider_map <- texas_map |>
     covered_counties |> select(county, provider),
     by = c("CNTY_NM" = "county")
   ) |>
-  mutate(provider = coalesce(provider, not_covered))
+  mutate(
+    provider_count = if_else(
+      is.na(provider),
+      0L,
+      as.integer(lengths(strsplit(provider, ";", fixed = TRUE)))
+    ),
+    provider_count_label = case_when(
+      provider_count == 0L ~ "0 MHU providers",
+      provider_count == 1L ~ "1 MHU provider",
+      TRUE ~ paste(provider_count, "MHU providers")
+    ),
+    provider_tooltip = case_when(
+      provider_count == 0L ~ "No assigned MHU providers",
+      provider_count == 1L ~ paste0("1 MHU provider: ", provider),
+      TRUE ~ paste0(provider_count, " MHU providers: ", provider)
+    )
+  )
 
-provider_palette <- setNames(provider_colors$color, provider_colors$provider)
-provider_legend_labels <- vapply(
-  provider_colors$provider,
-  function(x) paste(strwrap(x, width = 48), collapse = "<br>"),
-  character(1)
+provider_count_palette <- setNames(
+  provider_count_colors$color,
+  provider_count_colors$provider_count
 )
 
 stopifnot(
   nrow(covered_counties) == 71L,
   all(covered_counties$county %in% texas_map$CNTY_NM),
-  sum(provider_map$provider != not_covered) == 71L
+  sum(provider_map$provider_count > 0L) == 71L,
+  all(provider_map$provider_count %in% 0:3)
 )
 
 m <- leaflet(
@@ -379,8 +382,10 @@ m <- leaflet(
 
   addPolygons(
     data = provider_map,
-    group = "MHU Provider Coverage",
-    fillColor = ~unname(provider_palette[provider]),
+    group = "Number of MHU Providers",
+    fillColor = ~unname(
+      provider_count_palette[as.character(provider_count)]
+    ),
     weight = 2,
     color = "white",
     fillOpacity = 1,
@@ -391,8 +396,8 @@ m <- leaflet(
       color = "#D24699",
       bringToFront = TRUE
     ),
-    label = ~paste(CNTY_NM, "County:", provider),
-    popup = ~paste(CNTY_NM, "County:", provider),
+    label = ~paste(CNTY_NM, "County —", provider_tooltip),
+    popup = ~paste(CNTY_NM, "County —", provider_tooltip),
     labelOptions = labelOptions(
       direction = "auto",
       textsize = "14px",
@@ -433,7 +438,7 @@ m <- leaflet(
     baseGroups = c(
       "Population",
       "Total Providers per 1,000 Women 15-49",
-      "MHU Provider Coverage"
+      "Number of MHU Providers"
     ),
     overlayGroups = c("FPP Providers", "HTW Providers"),
     position = "bottomright",
@@ -460,11 +465,11 @@ m <- leaflet(
   className = "legend-perk"
   ) |>
   addLegend(
-    colors = provider_colors$color,
-    labels = provider_legend_labels,
-    title = "Providers",
+    colors = provider_count_colors$color,
+    labels = provider_count_colors$label,
+    title = "Number of MHU providers",
     opacity = 1,
-    group = "MHU Provider Coverage",
+    group = "Number of MHU Providers",
     position = "bottomright",
     className = "info legend legend-mhu"
   ) |>
@@ -499,7 +504,7 @@ m <- leaflet(
   ) |>
   addResetMapButton() |>
   hideGroup("Total Providers per 1,000 Women 15-49") |>
-  hideGroup("MHU Provider Coverage") |>
+  hideGroup("Number of MHU Providers") |>
   hideGroup("FPP Providers") |>
   hideGroup("HTW Providers")
 
@@ -543,7 +548,7 @@ m
   const baseLabels = [
     "Population",
     "Total Providers per 1,000 Women 15-49",
-    "MHU Provider Coverage"
+    "Number of MHU Providers"
   ];
 
   const overlayLabels = [
@@ -655,7 +660,7 @@ m
     // 1: Providers per 1,000, overlays off
     // 2: Providers per 1,000, FPP overlay on
     // 3: Providers per 1,000, HTW overlay on
-    // 4: MHU provider coverage, overlays off
+    // 4: Number of MHU providers, overlays off
     if (step === 0) {
       await clickRadioByLabel(baseLabels[0]);
       showOnlyLegend("Population");
@@ -731,7 +736,7 @@ m
 Mobile healthcare units are designed to close gaps by bringing services directly to patients and communities, especially in rural areas. Mobile clinics reduce the distance, time, and cost barriers that prevent many women from accessing care. Mobile clinics set up in trusted community spaces and adapt their routes based on need. They offer a flexible, efficient way to deliver essential women’s health services, such as birth control, cancer screenings, prenatal care, and preventive visits. For women who don’t have reliable access to transportation, mobile clinics can be a literal lifeline. When speaking to patients, they praise the convenience, as they are no longer required to travel hours from home, miss work, school, or childcare. Mobile clinics don’t just expand access; they help ensure care happens earlier, more consistently, and on patients’ terms.
 
 
-::: {.cr-section .quote-section .hide-narrative  layout="overlay-center"}
+::: {.cr-section .quote-section .hide-narrative  layout="overlay-right"}
 
 Keep scrolling. @cr-mytext0
 
@@ -843,7 +848,7 @@ m <- leaflet(
   addPolygons(
     data = highlight_map,
     group = "Service Counties",
-    fillColor = "#D24699",
+    fillColor = "#53284F",
     weight = 2,
     color = "white",
     fillOpacity = 0.70,
@@ -862,7 +867,7 @@ m <- leaflet(
   ) %>%
   addLegend(
     position = "bottomleft",
-    colors = "#D24699",
+    colors = "#53284F",
     labels = "Service areas",
     opacity = 0.70
   ) %>%
@@ -1446,7 +1451,7 @@ df |>
 :::
 
 
-:::: {.cr-section .hide-narrative layout="overlay-center"}
+:::: {.cr-section .hide-narrative layout="overlay-right"}
 Learn more. @cr-pie
 
 ::: {#cr-pie}
@@ -1624,7 +1629,7 @@ Scroll on. [@cr-mytext3]{hlz="cr-t1,cr-t2"}
 ### What comes next?
 
 
-::: {.cr-section .emphasis-section layout="overlay-center"}
+::: {.cr-section .emphasis-section layout="overlay-right"}
 @cr-myimage-capitol During the 89th Legislative Session, the Texas Women’s Healthcare Coalition and its partners secured [\$20 million]{.key-number1} in new state funding to expand mobile women's health units across Texas, doubling down on a commitment to meet women where they are. 
 
 This investment represents [\$10 million more]{.key-number1} than the amount secured in 2023, signaling growing legislative recognition of mobile healthcare as a critical solution to access gaps. This funding is the direct result of sustained, collective advocacy and a willingness by providers to find innovative solutions to reach the counties around them.
